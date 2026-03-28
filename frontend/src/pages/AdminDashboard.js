@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Switch } from '../components/ui/switch';
 import { toast } from 'sonner';
-import { LogOut, Plus, Pencil, Trash2, Image, Mail, Eye, EyeOff } from 'lucide-react';
+import { LogOut, Plus, Pencil, Trash2, Image, Mail, Eye, EyeOff, Palette } from 'lucide-react';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -22,6 +22,14 @@ export default function AdminDashboard() {
   const [banners, setBanners] = useState([]);
   const [brands, setBrands] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [settings, setSettings] = useState({
+    background_color: '#0A0A0A',
+    surface_color: '#141414',
+    primary_color: '#007AFF',
+    text_color: '#FFFFFF',
+    text_secondary_color: '#A1A1AA'
+  });
+  const [savingSettings, setSavingSettings] = useState(false);
   
   const [bannerDialog, setBannerDialog] = useState(false);
   const [brandDialog, setBrandDialog] = useState(false);
@@ -47,14 +55,16 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [bannersRes, brandsRes, messagesRes] = await Promise.all([
+      const [bannersRes, brandsRes, messagesRes, settingsRes] = await Promise.all([
         axios.get(`${API}/admin/banners`, { withCredentials: true }),
         axios.get(`${API}/admin/brands`, { withCredentials: true }),
-        axios.get(`${API}/admin/messages`, { withCredentials: true })
+        axios.get(`${API}/admin/messages`, { withCredentials: true }),
+        axios.get(`${API}/admin/settings`, { withCredentials: true })
       ]);
       setBanners(bannersRes.data);
       setBrands(brandsRes.data);
       setMessages(messagesRes.data);
+      setSettings(settingsRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
       if (error.response?.status === 401) {
@@ -167,6 +177,19 @@ export default function AdminDashboard() {
     }
   };
 
+  // Settings
+  const saveSettings = async () => {
+    setSavingSettings(true);
+    try {
+      await axios.put(`${API}/admin/settings`, settings, { withCredentials: true });
+      toast.success('Settings saved! Refresh landing page to see changes.');
+    } catch (error) {
+      toast.error('Error saving settings');
+    } finally {
+      setSavingSettings(false);
+    }
+  };
+
   if (loading || !user) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
@@ -217,6 +240,9 @@ export default function AdminDashboard() {
                   {messages.filter(m => !m.read).length}
                 </span>
               )}
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="data-[state=active]:bg-[#007AFF]" data-testid="tab-settings">
+              <Palette size={16} className="mr-2" /> Renkler
             </TabsTrigger>
           </TabsList>
 
@@ -370,6 +396,152 @@ export default function AdminDashboard() {
                   </div>
                 ))
               )}
+            </div>
+          </TabsContent>
+
+          {/* Settings Tab */}
+          <TabsContent value="settings" data-testid="settings-content">
+            <h2 className="text-2xl font-semibold text-white mb-6">Site Renkleri</h2>
+            
+            <div className="surface-card rounded-2xl p-8 max-w-2xl">
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm text-[#A1A1AA] mb-2">Arka Plan Rengi</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={settings.background_color}
+                        onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
+                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                        data-testid="color-background"
+                      />
+                      <Input
+                        value={settings.background_color}
+                        onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
+                        className="dark-input flex-1"
+                        data-testid="color-background-input"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm text-[#A1A1AA] mb-2">Kart/Yüzey Rengi</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={settings.surface_color}
+                        onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
+                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                        data-testid="color-surface"
+                      />
+                      <Input
+                        value={settings.surface_color}
+                        onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
+                        className="dark-input flex-1"
+                        data-testid="color-surface-input"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm text-[#A1A1AA] mb-2">Ana Renk (Butonlar)</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={settings.primary_color}
+                        onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
+                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                        data-testid="color-primary"
+                      />
+                      <Input
+                        value={settings.primary_color}
+                        onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
+                        className="dark-input flex-1"
+                        data-testid="color-primary-input"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm text-[#A1A1AA] mb-2">Yazı Rengi</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={settings.text_color}
+                        onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
+                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                        data-testid="color-text"
+                      />
+                      <Input
+                        value={settings.text_color}
+                        onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
+                        className="dark-input flex-1"
+                        data-testid="color-text-input"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm text-[#A1A1AA] mb-2">İkincil Yazı Rengi</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={settings.text_secondary_color}
+                        onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
+                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                        data-testid="color-text-secondary"
+                      />
+                      <Input
+                        value={settings.text_secondary_color}
+                        onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
+                        className="dark-input flex-1"
+                        data-testid="color-text-secondary-input"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="pt-4 border-t border-white/10">
+                  <div className="flex items-center gap-4">
+                    <Button
+                      onClick={saveSettings}
+                      disabled={savingSettings}
+                      className="bg-[#007AFF] hover:bg-[#3395FF]"
+                      data-testid="save-settings-btn"
+                    >
+                      {savingSettings ? 'Kaydediliyor...' : 'Kaydet'}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setSettings({
+                        background_color: '#0A0A0A',
+                        surface_color: '#141414',
+                        primary_color: '#007AFF',
+                        text_color: '#FFFFFF',
+                        text_secondary_color: '#A1A1AA'
+                      })}
+                      data-testid="reset-settings-btn"
+                    >
+                      Varsayılana Dön
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Preview */}
+                <div className="mt-6 pt-6 border-t border-white/10">
+                  <h3 className="text-white font-medium mb-4">Önizleme</h3>
+                  <div className="rounded-xl p-6" style={{ backgroundColor: settings.background_color }}>
+                    <div className="rounded-lg p-4 mb-4" style={{ backgroundColor: settings.surface_color }}>
+                      <h4 style={{ color: settings.text_color }} className="font-semibold mb-2">Örnek Başlık</h4>
+                      <p style={{ color: settings.text_secondary_color }} className="text-sm">Bu bir örnek metin paragrafıdır.</p>
+                    </div>
+                    <Button style={{ backgroundColor: settings.primary_color, color: settings.text_color }} className="rounded-lg px-6 py-2">
+                      Örnek Buton
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
           </TabsContent>
         </Tabs>

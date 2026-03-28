@@ -152,6 +152,21 @@ class ContactMessageCreate(BaseModel):
     phone: Optional[str] = None
     message: str
 
+class SiteSettings(BaseModel):
+    id: str = "site_settings"
+    background_color: str = "#0A0A0A"
+    surface_color: str = "#141414"
+    primary_color: str = "#007AFF"
+    text_color: str = "#FFFFFF"
+    text_secondary_color: str = "#A1A1AA"
+
+class SiteSettingsUpdate(BaseModel):
+    background_color: Optional[str] = None
+    surface_color: Optional[str] = None
+    primary_color: Optional[str] = None
+    text_color: Optional[str] = None
+    text_secondary_color: Optional[str] = None
+
 # Auth Endpoints
 @auth_router.post("/login")
 async def login(request: LoginRequest, response: Response):
@@ -279,6 +294,28 @@ async def delete_message(message_id: str, user: dict = Depends(get_current_user)
         raise HTTPException(status_code=404, detail="Message not found")
     return {"message": "Message deleted"}
 
+# Site Settings Endpoints
+@admin_router.get("/settings", response_model=SiteSettings)
+async def get_settings(user: dict = Depends(get_current_user)):
+    settings = await db.settings.find_one({"id": "site_settings"}, {"_id": 0})
+    if not settings:
+        default_settings = SiteSettings().model_dump()
+        await db.settings.insert_one(default_settings)
+        return default_settings
+    return settings
+
+@admin_router.put("/settings", response_model=SiteSettings)
+async def update_settings(settings: SiteSettingsUpdate, user: dict = Depends(get_current_user)):
+    update_data = {k: v for k, v in settings.model_dump().items() if v is not None}
+    if update_data:
+        await db.settings.update_one(
+            {"id": "site_settings"},
+            {"$set": update_data},
+            upsert=True
+        )
+    updated = await db.settings.find_one({"id": "site_settings"}, {"_id": 0})
+    return updated
+
 # Public Endpoints
 @api_router.get("/")
 async def root():
@@ -293,6 +330,13 @@ async def get_public_banners():
 async def get_public_brands():
     brands = await db.brands.find({"active": True}, {"_id": 0}).sort("order", 1).to_list(100)
     return brands
+
+@api_router.get("/public/settings", response_model=SiteSettings)
+async def get_public_settings():
+    settings = await db.settings.find_one({"id": "site_settings"}, {"_id": 0})
+    if not settings:
+        return SiteSettings().model_dump()
+    return settings
 
 @api_router.post("/contact", response_model=ContactMessage)
 async def submit_contact(contact: ContactMessageCreate):

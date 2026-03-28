@@ -15,6 +15,13 @@ export default function Landing() {
   const { language, setLanguage, t } = useLanguage();
   const [banners, setBanners] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [settings, setSettings] = useState({
+    background_color: '#0A0A0A',
+    surface_color: '#141414',
+    primary_color: '#007AFF',
+    text_color: '#FFFFFF',
+    text_secondary_color: '#A1A1AA'
+  });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' });
@@ -26,12 +33,14 @@ export default function Landing() {
 
   const fetchData = async () => {
     try {
-      const [bannersRes, brandsRes] = await Promise.all([
+      const [bannersRes, brandsRes, settingsRes] = await Promise.all([
         axios.get(`${API}/public/banners`),
-        axios.get(`${API}/public/brands`)
+        axios.get(`${API}/public/brands`),
+        axios.get(`${API}/public/settings`)
       ]);
       setBanners(bannersRes.data);
       setBrands(brandsRes.data);
+      setSettings(settingsRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -71,28 +80,28 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
+    <div className="min-h-screen" style={{ backgroundColor: settings.background_color }}>
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 header-glass" data-testid="header">
+      <header className="fixed top-0 left-0 right-0 z-50 header-glass" data-testid="header" style={{ backgroundColor: `${settings.background_color}99` }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2" data-testid="logo">
-              <span className="text-2xl font-bold text-white font-['Outfit']">ATERA</span>
+              <span className="text-2xl font-bold font-['Outfit']" style={{ color: settings.text_color }}>ATERA</span>
             </Link>
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('products')} className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-products">
+              <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-products">
                 {t('nav_products')}
               </button>
-              <button onClick={() => scrollToSection('brands')} className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-brands">
+              <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-brands">
                 {t('nav_brands')}
               </button>
-              <button onClick={() => scrollToSection('contact')} className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-contact">
+              <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-contact">
                 {t('nav_contact')}
               </button>
-              <Link to="/admin" className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-admin">
+              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-admin">
                 {t('nav_admin')}
               </Link>
             </nav>
@@ -103,6 +112,7 @@ export default function Landing() {
                 <button
                   onClick={() => setLanguage('tr')}
                   className={`lang-btn ${language === 'tr' ? 'active' : ''}`}
+                  style={{ backgroundColor: language === 'tr' ? settings.primary_color : 'transparent' }}
                   data-testid="lang-tr"
                 >
                   TR
@@ -110,6 +120,7 @@ export default function Landing() {
                 <button
                   onClick={() => setLanguage('en')}
                   className={`lang-btn ${language === 'en' ? 'active' : ''}`}
+                  style={{ backgroundColor: language === 'en' ? settings.primary_color : 'transparent' }}
                   data-testid="lang-en"
                 >
                   EN
@@ -117,8 +128,9 @@ export default function Landing() {
               </div>
               
               <button 
-                className="md:hidden text-white"
+                className="md:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                style={{ color: settings.text_color }}
                 data-testid="mobile-menu-toggle"
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -129,12 +141,12 @@ export default function Landing() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-[#0A0A0A] border-t border-white/10 py-4" data-testid="mobile-menu">
+          <div className="md:hidden border-t border-white/10 py-4" style={{ backgroundColor: settings.background_color }} data-testid="mobile-menu">
             <nav className="flex flex-col gap-4 px-6">
-              <button onClick={() => scrollToSection('products')} className="text-left text-white py-2">{t('nav_products')}</button>
-              <button onClick={() => scrollToSection('brands')} className="text-left text-white py-2">{t('nav_brands')}</button>
-              <button onClick={() => scrollToSection('contact')} className="text-left text-white py-2">{t('nav_contact')}</button>
-              <Link to="/admin" className="text-white py-2">{t('nav_admin')}</Link>
+              <button onClick={() => scrollToSection('products')} className="text-left py-2" style={{ color: settings.text_color }}>{t('nav_products')}</button>
+              <button onClick={() => scrollToSection('brands')} className="text-left py-2" style={{ color: settings.text_color }}>{t('nav_brands')}</button>
+              <button onClick={() => scrollToSection('contact')} className="text-left py-2" style={{ color: settings.text_color }}>{t('nav_contact')}</button>
+              <Link to="/admin" className="py-2" style={{ color: settings.text_color }}>{t('nav_admin')}</Link>
             </nav>
           </div>
         )}
@@ -157,16 +169,17 @@ export default function Landing() {
         {banners.length > 0 && (
           <div className="hero-content max-w-7xl mx-auto">
             <div className="animate-slideUp">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white font-['Outfit'] tracking-tighter mb-4" data-testid="hero-title">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-['Outfit'] tracking-tighter mb-4" style={{ color: settings.text_color }} data-testid="hero-title">
                 {language === 'tr' ? banners[currentSlide]?.title_tr : banners[currentSlide]?.title_en}
               </h1>
-              <p className="text-lg sm:text-xl text-[#A1A1AA] mb-8 max-w-2xl" data-testid="hero-subtitle">
+              <p className="text-lg sm:text-xl mb-8 max-w-2xl" style={{ color: settings.text_secondary_color }} data-testid="hero-subtitle">
                 {language === 'tr' ? banners[currentSlide]?.subtitle_tr : banners[currentSlide]?.subtitle_en}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button 
                   onClick={() => scrollToSection('products')}
-                  className="bg-[#007AFF] hover:bg-[#3395FF] text-white px-8 py-3 rounded-lg font-medium"
+                  className="text-white px-8 py-3 rounded-lg font-medium"
+                  style={{ backgroundColor: settings.primary_color }}
                   data-testid="hero-cta"
                 >
                   {t('hero_cta')}
@@ -174,7 +187,8 @@ export default function Landing() {
                 <Button 
                   onClick={() => scrollToSection('contact')}
                   variant="outline"
-                  className="border-white/20 text-white hover:bg-white/10 px-8 py-3 rounded-lg font-medium"
+                  className="border-white/20 hover:bg-white/10 px-8 py-3 rounded-lg font-medium"
+                  style={{ color: settings.text_color }}
                   data-testid="hero-contact"
                 >
                   {t('hero_contact')}
@@ -216,33 +230,33 @@ export default function Landing() {
       </section>
 
       {/* Products Section */}
-      <section id="products" className="py-20 md:py-32 px-6 md:px-12" data-testid="products-section">
+      <section id="products" className="py-20 md:py-32 px-6 md:px-12" data-testid="products-section" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="surface-card rounded-2xl p-8 text-center hover:scale-105 transition-transform" data-testid="product-laptops">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#007AFF]/20 flex items-center justify-center">
-                <Laptop className="text-[#007AFF]" size={32} />
+            <div className="rounded-2xl p-8 text-center hover:scale-105 transition-transform border border-white/10" style={{ backgroundColor: settings.surface_color }} data-testid="product-laptops">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
+                <Laptop style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Laptops</h3>
-              <p className="text-[#A1A1AA]">
+              <h3 className="text-xl font-semibold mb-3" style={{ color: settings.text_color }}>Laptops</h3>
+              <p style={{ color: settings.text_secondary_color }}>
                 {language === 'tr' ? 'Profesyoneller için yüksek performanslı laptoplar' : 'High-performance laptops for professionals'}
               </p>
             </div>
-            <div className="surface-card rounded-2xl p-8 text-center hover:scale-105 transition-transform" data-testid="product-gaming">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#007AFF]/20 flex items-center justify-center">
-                <Gamepad2 className="text-[#007AFF]" size={32} />
+            <div className="rounded-2xl p-8 text-center hover:scale-105 transition-transform border border-white/10" style={{ backgroundColor: settings.surface_color }} data-testid="product-gaming">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
+                <Gamepad2 style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Gaming Desk</h3>
-              <p className="text-[#A1A1AA]">
+              <h3 className="text-xl font-semibold mb-3" style={{ color: settings.text_color }}>Gaming Desk</h3>
+              <p style={{ color: settings.text_secondary_color }}>
                 {language === 'tr' ? 'Oyuncular için ergonomik gaming masaları' : 'Ergonomic gaming desks for gamers'}
               </p>
             </div>
-            <div className="surface-card rounded-2xl p-8 text-center hover:scale-105 transition-transform" data-testid="product-monitors">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#007AFF]/20 flex items-center justify-center">
-                <Monitor className="text-[#007AFF]" size={32} />
+            <div className="rounded-2xl p-8 text-center hover:scale-105 transition-transform border border-white/10" style={{ backgroundColor: settings.surface_color }} data-testid="product-monitors">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
+                <Monitor style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Monitor Arms</h3>
-              <p className="text-[#A1A1AA]">
+              <h3 className="text-xl font-semibold mb-3" style={{ color: settings.text_color }}>Monitor Arms</h3>
+              <p style={{ color: settings.text_secondary_color }}>
                 {language === 'tr' ? 'Ayarlanabilir monitör kolları ve standlar' : 'Adjustable monitor arms and stands'}
               </p>
             </div>
@@ -251,12 +265,12 @@ export default function Landing() {
       </section>
 
       {/* Brands Section */}
-      <section id="brands" className="py-20 md:py-32 bg-[#0A0A0A] border-y border-white/5" data-testid="brands-section">
+      <section id="brands" className="py-20 md:py-32 border-y border-white/5" data-testid="brands-section" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-white font-['Outfit'] tracking-tight mb-4" data-testid="brands-title">
+          <h2 className="text-3xl sm:text-4xl font-semibold font-['Outfit'] tracking-tight mb-4" style={{ color: settings.text_color }} data-testid="brands-title">
             {t('brands_title')}
           </h2>
-          <p className="text-[#A1A1AA]" data-testid="brands-subtitle">{t('brands_subtitle')}</p>
+          <p style={{ color: settings.text_secondary_color }} data-testid="brands-subtitle">{t('brands_subtitle')}</p>
         </div>
         
         {brands.length > 0 && (
@@ -278,49 +292,49 @@ export default function Landing() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 md:py-32 px-6 md:px-12" data-testid="contact-section">
+      <section id="contact" className="py-20 md:py-32 px-6 md:px-12" data-testid="contact-section" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Contact Info */}
             <div>
-              <h2 className="text-3xl sm:text-4xl font-semibold text-white font-['Outfit'] tracking-tight mb-4" data-testid="contact-title">
+              <h2 className="text-3xl sm:text-4xl font-semibold font-['Outfit'] tracking-tight mb-4" style={{ color: settings.text_color }} data-testid="contact-title">
                 {t('contact_title')}
               </h2>
-              <p className="text-[#A1A1AA] mb-8" data-testid="contact-subtitle">{t('contact_subtitle')}</p>
+              <p className="mb-8" style={{ color: settings.text_secondary_color }} data-testid="contact-subtitle">{t('contact_subtitle')}</p>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#007AFF]/20 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="text-[#007AFF]" size={20} />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${settings.primary_color}33` }}>
+                    <MapPin style={{ color: settings.primary_color }} size={20} />
                   </div>
                   <div>
-                    <h4 className="text-white font-medium mb-1">{t('footer_address')}</h4>
-                    <p className="text-[#A1A1AA]">İstanbul, Türkiye</p>
+                    <h4 className="font-medium mb-1" style={{ color: settings.text_color }}>{t('footer_address')}</h4>
+                    <p style={{ color: settings.text_secondary_color }}>İstanbul, Türkiye</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#007AFF]/20 flex items-center justify-center flex-shrink-0">
-                    <Phone className="text-[#007AFF]" size={20} />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${settings.primary_color}33` }}>
+                    <Phone style={{ color: settings.primary_color }} size={20} />
                   </div>
                   <div>
-                    <h4 className="text-white font-medium mb-1">{t('footer_phone')}</h4>
-                    <p className="text-[#A1A1AA]">+90 212 XXX XX XX</p>
+                    <h4 className="font-medium mb-1" style={{ color: settings.text_color }}>{t('footer_phone')}</h4>
+                    <p style={{ color: settings.text_secondary_color }}>+90 212 XXX XX XX</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#007AFF]/20 flex items-center justify-center flex-shrink-0">
-                    <Mail className="text-[#007AFF]" size={20} />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${settings.primary_color}33` }}>
+                    <Mail style={{ color: settings.primary_color }} size={20} />
                   </div>
                   <div>
-                    <h4 className="text-white font-medium mb-1">{t('footer_email')}</h4>
-                    <p className="text-[#A1A1AA]">info@atera.com.tr</p>
+                    <h4 className="font-medium mb-1" style={{ color: settings.text_color }}>{t('footer_email')}</h4>
+                    <p style={{ color: settings.text_secondary_color }}>info@atera.com.tr</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="surface-card rounded-2xl p-8">
+            <div className="rounded-2xl p-8 border border-white/10" style={{ backgroundColor: settings.surface_color }}>
               <form onSubmit={handleContactSubmit} className="space-y-6" data-testid="contact-form">
                 <div>
                   <Input
@@ -329,7 +343,8 @@ export default function Landing() {
                     value={contactForm.name}
                     onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                     required
-                    className="dark-input w-full px-4 py-3 rounded-lg"
+                    className="w-full px-4 py-3 rounded-lg border border-white/10"
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
                     data-testid="contact-name-input"
                   />
                 </div>
@@ -340,7 +355,8 @@ export default function Landing() {
                     value={contactForm.email}
                     onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                     required
-                    className="dark-input w-full px-4 py-3 rounded-lg"
+                    className="w-full px-4 py-3 rounded-lg border border-white/10"
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
                     data-testid="contact-email-input"
                   />
                 </div>
@@ -350,7 +366,8 @@ export default function Landing() {
                     placeholder={t('contact_phone')}
                     value={contactForm.phone}
                     onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
-                    className="dark-input w-full px-4 py-3 rounded-lg"
+                    className="w-full px-4 py-3 rounded-lg border border-white/10"
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
                     data-testid="contact-phone-input"
                   />
                 </div>
@@ -361,14 +378,16 @@ export default function Landing() {
                     onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                     required
                     rows={4}
-                    className="dark-input w-full px-4 py-3 rounded-lg resize-none"
+                    className="w-full px-4 py-3 rounded-lg resize-none border border-white/10"
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
                     data-testid="contact-message-input"
                   />
                 </div>
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-[#007AFF] hover:bg-[#3395FF] text-white py-3 rounded-lg font-medium transition-colors"
+                  className="w-full py-3 rounded-lg font-medium transition-colors"
+                  style={{ backgroundColor: settings.primary_color, color: settings.text_color }}
                   data-testid="contact-submit-btn"
                 >
                   {submitting ? '...' : t('contact_submit')}
@@ -380,12 +399,12 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 md:px-12 border-t border-white/10" data-testid="footer">
+      <footer className="py-12 px-6 md:px-12 border-t border-white/10" data-testid="footer" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-white font-['Outfit']">ATERA</span>
+            <span className="text-xl font-bold font-['Outfit']" style={{ color: settings.text_color }}>ATERA</span>
           </div>
-          <p className="text-[#A1A1AA] text-sm">
+          <p className="text-sm" style={{ color: settings.text_secondary_color }}>
             © {new Date().getFullYear()} Atera. {t('footer_rights')}
           </p>
         </div>
