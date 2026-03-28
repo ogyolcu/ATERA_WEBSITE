@@ -1,0 +1,99 @@
+{
+  "theme": "dark",
+  "archetype": "4 (Swiss & High-Contrast)",
+  "vibe": "High-end tech, professional, sleek, cinematic",
+  "colors": {
+    "background": "#0A0A0A",
+    "surface": "#141414",
+    "surface_glass": "rgba(10, 10, 10, 0.6)",
+    "primary": "#007AFF",
+    "primary_hover": "#3395FF",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#A1A1AA",
+    "border": "rgba(255, 255, 255, 0.1)",
+    "error": "#FF3B30",
+    "success": "#34C759"
+  },
+  "typography": {
+    "heading_font": "Outfit",
+    "body_font": "Manrope",
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tighter font-bold",
+      "h2": "text-3xl sm:text-4xl tracking-tight font-semibold",
+      "h3": "text-xl sm:text-2xl tracking-tight font-medium",
+      "body": "text-base leading-relaxed text-[#A1A1AA]",
+      "small": "text-sm tracking-wide uppercase text-[#A1A1AA]"
+    }
+  },
+  "spacing_and_layout": {
+    "section_padding": "py-20 md:py-32 px-6 md:px-12",
+    "container_max": "max-w-7xl mx-auto",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-8",
+    "card_padding": "p-8",
+    "border_radius": "rounded-2xl",
+    "hero_overlay": "bg-black/40"
+  },
+  "surfaces_and_micro_themes": {
+    "header": "Crystal Glass - bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-sm",
+    "cards": "Solid surface - bg-[#141414] border border-white/10 hover:border-white/20 transition-colors",
+    "buttons": "Primary: bg-[#007AFF] text-white hover:bg-[#3395FF] rounded-lg px-6 py-3 font-medium transition-all. Secondary: bg-white/5 text-white hover:bg-white/10 border border-white/10 rounded-lg px-6 py-3"
+  },
+  "media": {
+    "hero_carousel": [
+      {
+        "url": "https://images.pexels.com/photos/10948190/pexels-photo-10948190.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Glowing laptop keyboard in dark setting",
+        "title": "Next-Gen IT Equipment",
+        "subtitle": "Empowering your workspace with high-performance tech."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1603481546238-487240415921?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwxfHxnYW1pbmclMjBkZXNrJTIwc2V0dXAlMjBkYXJrfGVufDB8fHx8MTc3NDcxNzkwN3ww&ixlib=rb-4.1.0&q=85",
+        "alt": "Gaming desk setup dark",
+        "title": "Ultimate Gaming Desks",
+        "subtitle": "Built for comfort, designed for victory."
+      },
+      {
+        "url": "https://images.pexels.com/photos/2473183/pexels-photo-2473183.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Laptop displaying vibrant abstract design",
+        "title": "Premium Laptops",
+        "subtitle": "Sleek, powerful, and ready for professionals."
+      }
+    ],
+    "brand_logos": [
+      {
+        "name": "HP",
+        "url": "https://images.unsplash.com/photo-1706879349377-bda8643cae8b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwxfHxIUCUyMGxvZ298ZW58MHx8fHwxNzc0NzE3OTE0fDA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "name": "Lenovo",
+        "url": "https://images.pexels.com/photos/16162632/pexels-photo-16162632.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "name": "Dell",
+        "url": "https://images.pexels.com/photos/21620890/pexels-photo-21620890.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "name": "VIYERO",
+        "url": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHwxfHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NzQ3MTc5MTZ8MA&ixlib=rb-4.1.0&q=85"
+      }
+    ]
+  },
+  "components_and_interactions": {
+    "navigation": "Sticky header with glassmorphism. Contains Brand Logo (text), links (Products, Brands, Contact), Language Switcher (TR/EN toggle), and Admin Dashboard link.",
+    "hero": "Full-bleed carousel with crossfade or slide transition. Use 'lucide-react' chevrons for controls. Text overlay is bottom-left aligned, inside a p-12 container to ensure readability. Ensure gradient overlay at bottom `bg-gradient-to-t from-black via-black/50 to-transparent`.",
+    "brands_marquee": "Use react-fast-marquee. Grayscale filter on brand logos `filter grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100`. Smooth, slow drift.",
+    "contact_form": "Shadcn form. Dark inputs `bg-[#0A0A0A] border-white/10 text-white placeholder:text-zinc-600 focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF]`. 'Submit' button takes primary styling.",
+    "admin_dashboard": "Grid layout (Control Room archetype). Cardless or very subtle 1px border cards. Dense data for managing Carousel items and Brands. Use Shadcn tables, dialogs, and forms. Color: strict monochrome + #007AFF.",
+    "language_switcher": "Dropdown menu using Shadcn, simple text swap TR / EN."
+  },
+  "instructions_to_main_agent": [
+    "Strictly adhere to the dark theme colors provided.",
+    "Use Outfit for all headings and Manrope for body text.",
+    "Ensure all interactive elements have hover states (e.g., buttons, links, cards).",
+    "Use the provided media URLs for the hero carousel and brand logos placeholder, which the admin can 'manage' via state.",
+    "Do NOT use 'Inter' for headings. Do NOT use default blue/purple gradients.",
+    "Apply `data-testid` to all forms, inputs, buttons, and navigation items.",
+    "Use Phosphor icons or Lucide icons for all UI iconography.",
+    "Header must use crystal glassmorphism `backdrop-blur-xl bg-black/60 border-b border-white/10`."
+  ]
+}
