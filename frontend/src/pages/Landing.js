@@ -1,0 +1,395 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Marquee from 'react-fast-marquee';
+import { ChevronLeft, ChevronRight, Monitor, Laptop, Gamepad2, Mail, Phone, MapPin, Menu, X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
+import { toast } from 'sonner';
+
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+
+export default function Landing() {
+  const { language, setLanguage, t } = useLanguage();
+  const [banners, setBanners] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const [bannersRes, brandsRes] = await Promise.all([
+        axios.get(`${API}/public/banners`),
+        axios.get(`${API}/public/brands`)
+      ]);
+      setBanners(bannersRes.data);
+      setBrands(brandsRes.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % banners.length);
+  }, [banners.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
+  }, [banners.length]);
+
+  useEffect(() => {
+    if (banners.length === 0) return;
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, [banners.length, nextSlide]);
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await axios.post(`${API}/contact`, contactForm);
+      toast.success(t('contact_success'));
+      setContactForm({ name: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      toast.error(t('contact_error'));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0A0A0A]">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 header-glass" data-testid="header">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2" data-testid="logo">
+              <span className="text-2xl font-bold text-white font-['Outfit']">ATERA</span>
+            </Link>
+
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-8">
+              <button onClick={() => scrollToSection('products')} className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-products">
+                {t('nav_products')}
+              </button>
+              <button onClick={() => scrollToSection('brands')} className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-brands">
+                {t('nav_brands')}
+              </button>
+              <button onClick={() => scrollToSection('contact')} className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-contact">
+                {t('nav_contact')}
+              </button>
+              <Link to="/admin" className="text-[#A1A1AA] hover:text-white transition-colors" data-testid="nav-admin">
+                {t('nav_admin')}
+              </Link>
+            </nav>
+
+            {/* Language Switcher + Mobile Menu */}
+            <div className="flex items-center gap-4">
+              <div className="lang-switch" data-testid="language-switcher">
+                <button
+                  onClick={() => setLanguage('tr')}
+                  className={`lang-btn ${language === 'tr' ? 'active' : ''}`}
+                  data-testid="lang-tr"
+                >
+                  TR
+                </button>
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`lang-btn ${language === 'en' ? 'active' : ''}`}
+                  data-testid="lang-en"
+                >
+                  EN
+                </button>
+              </div>
+              
+              <button 
+                className="md:hidden text-white"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                data-testid="mobile-menu-toggle"
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#0A0A0A] border-t border-white/10 py-4" data-testid="mobile-menu">
+            <nav className="flex flex-col gap-4 px-6">
+              <button onClick={() => scrollToSection('products')} className="text-left text-white py-2">{t('nav_products')}</button>
+              <button onClick={() => scrollToSection('brands')} className="text-left text-white py-2">{t('nav_brands')}</button>
+              <button onClick={() => scrollToSection('contact')} className="text-left text-white py-2">{t('nav_contact')}</button>
+              <Link to="/admin" className="text-white py-2">{t('nav_admin')}</Link>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <section className="hero-section" data-testid="hero-section">
+        {banners.map((banner, index) => (
+          <div
+            key={banner.id}
+            className="hero-slide"
+            style={{ opacity: index === currentSlide ? 1 : 0 }}
+            data-testid={`hero-slide-${index}`}
+          >
+            <img src={banner.url} alt={banner.alt} />
+            <div className="hero-overlay" />
+          </div>
+        ))}
+        
+        {banners.length > 0 && (
+          <div className="hero-content max-w-7xl mx-auto">
+            <div className="animate-slideUp">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white font-['Outfit'] tracking-tighter mb-4" data-testid="hero-title">
+                {language === 'tr' ? banners[currentSlide]?.title_tr : banners[currentSlide]?.title_en}
+              </h1>
+              <p className="text-lg sm:text-xl text-[#A1A1AA] mb-8 max-w-2xl" data-testid="hero-subtitle">
+                {language === 'tr' ? banners[currentSlide]?.subtitle_tr : banners[currentSlide]?.subtitle_en}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button 
+                  onClick={() => scrollToSection('products')}
+                  className="bg-[#007AFF] hover:bg-[#3395FF] text-white px-8 py-3 rounded-lg font-medium"
+                  data-testid="hero-cta"
+                >
+                  {t('hero_cta')}
+                </Button>
+                <Button 
+                  onClick={() => scrollToSection('contact')}
+                  variant="outline"
+                  className="border-white/20 text-white hover:bg-white/10 px-8 py-3 rounded-lg font-medium"
+                  data-testid="hero-contact"
+                >
+                  {t('hero_contact')}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Carousel Controls */}
+        {banners.length > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/40 backdrop-blur flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+              data-testid="carousel-prev"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/40 backdrop-blur flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+              data-testid="carousel-next"
+            >
+              <ChevronRight size={24} />
+            </button>
+            <div className="carousel-indicators" data-testid="carousel-indicators">
+              {banners.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`carousel-dot ${index === currentSlide ? 'active' : ''}`}
+                  data-testid={`carousel-dot-${index}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </section>
+
+      {/* Products Section */}
+      <section id="products" className="py-20 md:py-32 px-6 md:px-12" data-testid="products-section">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="surface-card rounded-2xl p-8 text-center hover:scale-105 transition-transform" data-testid="product-laptops">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#007AFF]/20 flex items-center justify-center">
+                <Laptop className="text-[#007AFF]" size={32} />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Laptops</h3>
+              <p className="text-[#A1A1AA]">
+                {language === 'tr' ? 'Profesyoneller için yüksek performanslı laptoplar' : 'High-performance laptops for professionals'}
+              </p>
+            </div>
+            <div className="surface-card rounded-2xl p-8 text-center hover:scale-105 transition-transform" data-testid="product-gaming">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#007AFF]/20 flex items-center justify-center">
+                <Gamepad2 className="text-[#007AFF]" size={32} />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Gaming Desk</h3>
+              <p className="text-[#A1A1AA]">
+                {language === 'tr' ? 'Oyuncular için ergonomik gaming masaları' : 'Ergonomic gaming desks for gamers'}
+              </p>
+            </div>
+            <div className="surface-card rounded-2xl p-8 text-center hover:scale-105 transition-transform" data-testid="product-monitors">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#007AFF]/20 flex items-center justify-center">
+                <Monitor className="text-[#007AFF]" size={32} />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Monitor Arms</h3>
+              <p className="text-[#A1A1AA]">
+                {language === 'tr' ? 'Ayarlanabilir monitör kolları ve standlar' : 'Adjustable monitor arms and stands'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Brands Section */}
+      <section id="brands" className="py-20 md:py-32 bg-[#0A0A0A] border-y border-white/5" data-testid="brands-section">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white font-['Outfit'] tracking-tight mb-4" data-testid="brands-title">
+            {t('brands_title')}
+          </h2>
+          <p className="text-[#A1A1AA]" data-testid="brands-subtitle">{t('brands_subtitle')}</p>
+        </div>
+        
+        {brands.length > 0 && (
+          <Marquee gradient={false} speed={40} pauseOnHover data-testid="brands-marquee">
+            {brands.concat(brands).map((brand, index) => (
+              <div key={`${brand.id}-${index}`} className="mx-12 flex items-center justify-center">
+                <div className="w-40 h-20 flex items-center justify-center bg-white/5 rounded-xl p-4">
+                  <img
+                    src={brand.url}
+                    alt={brand.name}
+                    className="brand-logo max-h-12 max-w-full object-contain"
+                    data-testid={`brand-logo-${brand.name.toLowerCase()}`}
+                  />
+                </div>
+              </div>
+            ))}
+          </Marquee>
+        )}
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 md:py-32 px-6 md:px-12" data-testid="contact-section">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Contact Info */}
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-semibold text-white font-['Outfit'] tracking-tight mb-4" data-testid="contact-title">
+                {t('contact_title')}
+              </h2>
+              <p className="text-[#A1A1AA] mb-8" data-testid="contact-subtitle">{t('contact_subtitle')}</p>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#007AFF]/20 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="text-[#007AFF]" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-medium mb-1">{t('footer_address')}</h4>
+                    <p className="text-[#A1A1AA]">İstanbul, Türkiye</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#007AFF]/20 flex items-center justify-center flex-shrink-0">
+                    <Phone className="text-[#007AFF]" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-medium mb-1">{t('footer_phone')}</h4>
+                    <p className="text-[#A1A1AA]">+90 212 XXX XX XX</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#007AFF]/20 flex items-center justify-center flex-shrink-0">
+                    <Mail className="text-[#007AFF]" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-medium mb-1">{t('footer_email')}</h4>
+                    <p className="text-[#A1A1AA]">info@atera.com.tr</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div className="surface-card rounded-2xl p-8">
+              <form onSubmit={handleContactSubmit} className="space-y-6" data-testid="contact-form">
+                <div>
+                  <Input
+                    type="text"
+                    placeholder={t('contact_name')}
+                    value={contactForm.name}
+                    onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                    required
+                    className="dark-input w-full px-4 py-3 rounded-lg"
+                    data-testid="contact-name-input"
+                  />
+                </div>
+                <div>
+                  <Input
+                    type="email"
+                    placeholder={t('contact_email')}
+                    value={contactForm.email}
+                    onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                    required
+                    className="dark-input w-full px-4 py-3 rounded-lg"
+                    data-testid="contact-email-input"
+                  />
+                </div>
+                <div>
+                  <Input
+                    type="tel"
+                    placeholder={t('contact_phone')}
+                    value={contactForm.phone}
+                    onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                    className="dark-input w-full px-4 py-3 rounded-lg"
+                    data-testid="contact-phone-input"
+                  />
+                </div>
+                <div>
+                  <Textarea
+                    placeholder={t('contact_message')}
+                    value={contactForm.message}
+                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                    required
+                    rows={4}
+                    className="dark-input w-full px-4 py-3 rounded-lg resize-none"
+                    data-testid="contact-message-input"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full bg-[#007AFF] hover:bg-[#3395FF] text-white py-3 rounded-lg font-medium transition-colors"
+                  data-testid="contact-submit-btn"
+                >
+                  {submitting ? '...' : t('contact_submit')}
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-6 md:px-12 border-t border-white/10" data-testid="footer">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold text-white font-['Outfit']">ATERA</span>
+          </div>
+          <p className="text-[#A1A1AA] text-sm">
+            © {new Date().getFullYear()} Atera. {t('footer_rights')}
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}
