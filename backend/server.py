@@ -159,6 +159,10 @@ class SiteSettings(BaseModel):
     primary_color: str = "#007AFF"
     text_color: str = "#FFFFFF"
     text_secondary_color: str = "#A1A1AA"
+    heading_font: str = "Outfit"
+    body_font: str = "Manrope"
+    heading_size: str = "normal"
+    body_size: str = "normal"
 
 class SiteSettingsUpdate(BaseModel):
     background_color: Optional[str] = None
@@ -166,6 +170,10 @@ class SiteSettingsUpdate(BaseModel):
     primary_color: Optional[str] = None
     text_color: Optional[str] = None
     text_secondary_color: Optional[str] = None
+    heading_font: Optional[str] = None
+    body_font: Optional[str] = None
+    heading_size: Optional[str] = None
+    body_size: Optional[str] = None
 
 # Auth Endpoints
 @auth_router.post("/login")

@@ -9,6 +9,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Switch } from '../components/ui/switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { toast } from 'sonner';
 import { LogOut, Plus, Pencil, Trash2, Image, Mail, Eye, EyeOff, Palette } from 'lucide-react';
 
@@ -27,9 +28,35 @@ export default function AdminDashboard() {
     surface_color: '#141414',
     primary_color: '#007AFF',
     text_color: '#FFFFFF',
-    text_secondary_color: '#A1A1AA'
+    text_secondary_color: '#A1A1AA',
+    heading_font: 'Outfit',
+    body_font: 'Manrope',
+    heading_size: 'normal',
+    body_size: 'normal'
   });
   const [savingSettings, setSavingSettings] = useState(false);
+
+  const fontOptions = [
+    { value: 'Outfit', label: 'Outfit' },
+    { value: 'Manrope', label: 'Manrope' },
+    { value: 'Inter', label: 'Inter' },
+    { value: 'Poppins', label: 'Poppins' },
+    { value: 'Roboto', label: 'Roboto' },
+    { value: 'Open Sans', label: 'Open Sans' },
+    { value: 'Montserrat', label: 'Montserrat' },
+    { value: 'Playfair Display', label: 'Playfair Display' },
+    { value: 'Lato', label: 'Lato' },
+    { value: 'Raleway', label: 'Raleway' },
+    { value: 'Nunito', label: 'Nunito' },
+    { value: 'Source Sans Pro', label: 'Source Sans Pro' },
+  ];
+
+  const sizeOptions = [
+    { value: 'small', label: 'Küçük' },
+    { value: 'normal', label: 'Normal' },
+    { value: 'large', label: 'Büyük' },
+    { value: 'xlarge', label: 'Çok Büyük' },
+  ];
   
   const [bannerDialog, setBannerDialog] = useState(false);
   const [brandDialog, setBrandDialog] = useState(false);
@@ -401,103 +428,211 @@ export default function AdminDashboard() {
 
           {/* Settings Tab */}
           <TabsContent value="settings" data-testid="settings-content">
-            <h2 className="text-2xl font-semibold text-white mb-6">Site Renkleri</h2>
+            <h2 className="text-2xl font-semibold text-white mb-6">Site Ayarları</h2>
             
-            <div className="surface-card rounded-2xl p-8 max-w-2xl">
-              <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm text-[#A1A1AA] mb-2">Arka Plan Rengi</label>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="color"
-                        value={settings.background_color}
-                        onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
-                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                        data-testid="color-background"
-                      />
-                      <Input
-                        value={settings.background_color}
-                        onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
-                        className="dark-input flex-1"
-                        data-testid="color-background-input"
-                      />
+            <div className="surface-card rounded-2xl p-8 max-w-3xl">
+              <div className="space-y-8">
+                {/* Colors Section */}
+                <div>
+                  <h3 className="text-lg font-medium text-white mb-4 flex items-center gap-2">
+                    <Palette size={20} /> Renkler
+                  </h3>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Arka Plan Rengi</label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="color"
+                          value={settings.background_color}
+                          onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
+                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                          data-testid="color-background"
+                        />
+                        <Input
+                          value={settings.background_color}
+                          onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
+                          className="dark-input flex-1"
+                          data-testid="color-background-input"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Kart/Yüzey Rengi</label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="color"
+                          value={settings.surface_color}
+                          onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
+                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                          data-testid="color-surface"
+                        />
+                        <Input
+                          value={settings.surface_color}
+                          onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
+                          className="dark-input flex-1"
+                          data-testid="color-surface-input"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Ana Renk (Butonlar)</label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="color"
+                          value={settings.primary_color}
+                          onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
+                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                          data-testid="color-primary"
+                        />
+                        <Input
+                          value={settings.primary_color}
+                          onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
+                          className="dark-input flex-1"
+                          data-testid="color-primary-input"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Yazı Rengi</label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="color"
+                          value={settings.text_color}
+                          onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
+                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                          data-testid="color-text"
+                        />
+                        <Input
+                          value={settings.text_color}
+                          onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
+                          className="dark-input flex-1"
+                          data-testid="color-text-input"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">İkincil Yazı Rengi</label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="color"
+                          value={settings.text_secondary_color}
+                          onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
+                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
+                          data-testid="color-text-secondary"
+                        />
+                        <Input
+                          value={settings.text_secondary_color}
+                          onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
+                          className="dark-input flex-1"
+                          data-testid="color-text-secondary-input"
+                        />
+                      </div>
                     </div>
                   </div>
-                  
-                  <div>
-                    <label className="block text-sm text-[#A1A1AA] mb-2">Kart/Yüzey Rengi</label>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="color"
-                        value={settings.surface_color}
-                        onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
-                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                        data-testid="color-surface"
-                      />
-                      <Input
-                        value={settings.surface_color}
-                        onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
-                        className="dark-input flex-1"
-                        data-testid="color-surface-input"
-                      />
+                </div>
+
+                {/* Fonts Section */}
+                <div className="pt-6 border-t border-white/10">
+                  <h3 className="text-lg font-medium text-white mb-4 flex items-center gap-2">
+                    <span className="text-xl">Aa</span> Fontlar
+                  </h3>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Başlık Fontu</label>
+                      <Select 
+                        value={settings.heading_font} 
+                        onValueChange={(value) => setSettings({ ...settings, heading_font: value })}
+                      >
+                        <SelectTrigger className="dark-input" data-testid="font-heading-select">
+                          <SelectValue placeholder="Font seçin" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#141414] border-white/10">
+                          {fontOptions.map((font) => (
+                            <SelectItem 
+                              key={font.value} 
+                              value={font.value}
+                              className="text-white hover:bg-white/10"
+                              style={{ fontFamily: font.value }}
+                            >
+                              {font.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm text-[#A1A1AA] mb-2">Ana Renk (Butonlar)</label>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="color"
-                        value={settings.primary_color}
-                        onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
-                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                        data-testid="color-primary"
-                      />
-                      <Input
-                        value={settings.primary_color}
-                        onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
-                        className="dark-input flex-1"
-                        data-testid="color-primary-input"
-                      />
+                    
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Başlık Boyutu</label>
+                      <Select 
+                        value={settings.heading_size} 
+                        onValueChange={(value) => setSettings({ ...settings, heading_size: value })}
+                      >
+                        <SelectTrigger className="dark-input" data-testid="size-heading-select">
+                          <SelectValue placeholder="Boyut seçin" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#141414] border-white/10">
+                          {sizeOptions.map((size) => (
+                            <SelectItem 
+                              key={size.value} 
+                              value={size.value}
+                              className="text-white hover:bg-white/10"
+                            >
+                              {size.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm text-[#A1A1AA] mb-2">Yazı Rengi</label>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="color"
-                        value={settings.text_color}
-                        onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
-                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                        data-testid="color-text"
-                      />
-                      <Input
-                        value={settings.text_color}
-                        onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
-                        className="dark-input flex-1"
-                        data-testid="color-text-input"
-                      />
+                    
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Metin Fontu</label>
+                      <Select 
+                        value={settings.body_font} 
+                        onValueChange={(value) => setSettings({ ...settings, body_font: value })}
+                      >
+                        <SelectTrigger className="dark-input" data-testid="font-body-select">
+                          <SelectValue placeholder="Font seçin" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#141414] border-white/10">
+                          {fontOptions.map((font) => (
+                            <SelectItem 
+                              key={font.value} 
+                              value={font.value}
+                              className="text-white hover:bg-white/10"
+                              style={{ fontFamily: font.value }}
+                            >
+                              {font.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm text-[#A1A1AA] mb-2">İkincil Yazı Rengi</label>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="color"
-                        value={settings.text_secondary_color}
-                        onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
-                        className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                        data-testid="color-text-secondary"
-                      />
-                      <Input
-                        value={settings.text_secondary_color}
-                        onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
-                        className="dark-input flex-1"
-                        data-testid="color-text-secondary-input"
-                      />
+                    
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Metin Boyutu</label>
+                      <Select 
+                        value={settings.body_size} 
+                        onValueChange={(value) => setSettings({ ...settings, body_size: value })}
+                      >
+                        <SelectTrigger className="dark-input" data-testid="size-body-select">
+                          <SelectValue placeholder="Boyut seçin" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#141414] border-white/10">
+                          {sizeOptions.map((size) => (
+                            <SelectItem 
+                              key={size.value} 
+                              value={size.value}
+                              className="text-white hover:bg-white/10"
+                            >
+                              {size.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
                 </div>
@@ -519,7 +654,11 @@ export default function AdminDashboard() {
                         surface_color: '#141414',
                         primary_color: '#007AFF',
                         text_color: '#FFFFFF',
-                        text_secondary_color: '#A1A1AA'
+                        text_secondary_color: '#A1A1AA',
+                        heading_font: 'Outfit',
+                        body_font: 'Manrope',
+                        heading_size: 'normal',
+                        body_size: 'normal'
                       })}
                       data-testid="reset-settings-btn"
                     >
@@ -533,8 +672,29 @@ export default function AdminDashboard() {
                   <h3 className="text-white font-medium mb-4">Önizleme</h3>
                   <div className="rounded-xl p-6" style={{ backgroundColor: settings.background_color }}>
                     <div className="rounded-lg p-4 mb-4" style={{ backgroundColor: settings.surface_color }}>
-                      <h4 style={{ color: settings.text_color }} className="font-semibold mb-2">Örnek Başlık</h4>
-                      <p style={{ color: settings.text_secondary_color }} className="text-sm">Bu bir örnek metin paragrafıdır.</p>
+                      <h4 
+                        style={{ 
+                          color: settings.text_color, 
+                          fontFamily: settings.heading_font,
+                          fontSize: settings.heading_size === 'small' ? '1.25rem' : 
+                                   settings.heading_size === 'normal' ? '1.5rem' : 
+                                   settings.heading_size === 'large' ? '1.875rem' : '2.25rem'
+                        }} 
+                        className="font-semibold mb-2"
+                      >
+                        Örnek Başlık
+                      </h4>
+                      <p 
+                        style={{ 
+                          color: settings.text_secondary_color, 
+                          fontFamily: settings.body_font,
+                          fontSize: settings.body_size === 'small' ? '0.875rem' : 
+                                   settings.body_size === 'normal' ? '1rem' : 
+                                   settings.body_size === 'large' ? '1.125rem' : '1.25rem'
+                        }}
+                      >
+                        Bu bir örnek metin paragrafıdır. Font ve boyut ayarları burada görünecek.
+                      </p>
                     </div>
                     <Button style={{ backgroundColor: settings.primary_color, color: settings.text_color }} className="rounded-lg px-6 py-2">
                       Örnek Buton

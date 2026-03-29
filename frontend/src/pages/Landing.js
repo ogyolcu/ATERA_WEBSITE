@@ -20,7 +20,11 @@ export default function Landing() {
     surface_color: '#141414',
     primary_color: '#007AFF',
     text_color: '#FFFFFF',
-    text_secondary_color: '#A1A1AA'
+    text_secondary_color: '#A1A1AA',
+    heading_font: 'Outfit',
+    body_font: 'Manrope',
+    heading_size: 'normal',
+    body_size: 'normal'
   });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -74,34 +78,71 @@ export default function Landing() {
     }
   };
 
+  // Font size calculations
+  const getHeadingSize = (base) => {
+    const sizes = {
+      small: { h1: 'text-3xl sm:text-4xl lg:text-5xl', h2: 'text-2xl sm:text-3xl', h3: 'text-lg sm:text-xl' },
+      normal: { h1: 'text-4xl sm:text-5xl lg:text-6xl', h2: 'text-3xl sm:text-4xl', h3: 'text-xl sm:text-2xl' },
+      large: { h1: 'text-5xl sm:text-6xl lg:text-7xl', h2: 'text-4xl sm:text-5xl', h3: 'text-2xl sm:text-3xl' },
+      xlarge: { h1: 'text-6xl sm:text-7xl lg:text-8xl', h2: 'text-5xl sm:text-6xl', h3: 'text-3xl sm:text-4xl' },
+    };
+    return sizes[settings.heading_size]?.[base] || sizes.normal[base];
+  };
+
+  const getBodySize = () => {
+    const sizes = {
+      small: 'text-sm',
+      normal: 'text-base',
+      large: 'text-lg',
+      xlarge: 'text-xl',
+    };
+    return sizes[settings.body_size] || 'text-base';
+  };
+
+  const getSubtitleSize = () => {
+    const sizes = {
+      small: 'text-base sm:text-lg',
+      normal: 'text-lg sm:text-xl',
+      large: 'text-xl sm:text-2xl',
+      xlarge: 'text-2xl sm:text-3xl',
+    };
+    return sizes[settings.body_size] || 'text-lg sm:text-xl';
+  };
+
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: settings.background_color }}>
+    <div className="min-h-screen" style={{ backgroundColor: settings.background_color, fontFamily: settings.body_font }}>
+      {/* Google Fonts Link */}
+      <link 
+        href={`https://fonts.googleapis.com/css2?family=${settings.heading_font.replace(' ', '+')}:wght@400;500;600;700;800&family=${settings.body_font.replace(' ', '+')}:wght@400;500;600;700&display=swap`} 
+        rel="stylesheet" 
+      />
+      
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 header-glass" data-testid="header" style={{ backgroundColor: `${settings.background_color}99` }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2" data-testid="logo">
-              <span className="text-2xl font-bold font-['Outfit']" style={{ color: settings.text_color }}>ATERA</span>
+              <span className="text-2xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>ATERA</span>
             </Link>
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-products">
+              <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-products">
                 {t('nav_products')}
               </button>
-              <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-brands">
+              <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-brands">
                 {t('nav_brands')}
               </button>
-              <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-contact">
+              <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-contact">
                 {t('nav_contact')}
               </button>
-              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color }} data-testid="nav-admin">
+              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-admin">
                 {t('nav_admin')}
               </Link>
             </nav>
@@ -169,10 +210,10 @@ export default function Landing() {
         {banners.length > 0 && (
           <div className="hero-content max-w-7xl mx-auto">
             <div className="animate-slideUp">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-['Outfit'] tracking-tighter mb-4" style={{ color: settings.text_color }} data-testid="hero-title">
+              <h1 className={`${getHeadingSize('h1')} font-bold tracking-tighter mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="hero-title">
                 {language === 'tr' ? banners[currentSlide]?.title_tr : banners[currentSlide]?.title_en}
               </h1>
-              <p className="text-lg sm:text-xl mb-8 max-w-2xl" style={{ color: settings.text_secondary_color }} data-testid="hero-subtitle">
+              <p className={`${getSubtitleSize()} mb-8 max-w-2xl`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="hero-subtitle">
                 {language === 'tr' ? banners[currentSlide]?.subtitle_tr : banners[currentSlide]?.subtitle_en}
               </p>
               <div className="flex flex-wrap gap-4">
@@ -237,8 +278,8 @@ export default function Landing() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Laptop style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: settings.text_color }}>Laptops</h3>
-              <p style={{ color: settings.text_secondary_color }}>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>Laptops</h3>
+              <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
                 {language === 'tr' ? 'Profesyoneller için yüksek performanslı laptoplar' : 'High-performance laptops for professionals'}
               </p>
             </div>
@@ -246,8 +287,8 @@ export default function Landing() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Gamepad2 style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: settings.text_color }}>Gaming Desk</h3>
-              <p style={{ color: settings.text_secondary_color }}>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>Gaming Desk</h3>
+              <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
                 {language === 'tr' ? 'Oyuncular için ergonomik gaming masaları' : 'Ergonomic gaming desks for gamers'}
               </p>
             </div>
@@ -255,8 +296,8 @@ export default function Landing() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Monitor style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: settings.text_color }}>Monitor Arms</h3>
-              <p style={{ color: settings.text_secondary_color }}>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>Monitor Arms</h3>
+              <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
                 {language === 'tr' ? 'Ayarlanabilir monitör kolları ve standlar' : 'Adjustable monitor arms and stands'}
               </p>
             </div>
@@ -267,10 +308,10 @@ export default function Landing() {
       {/* Brands Section */}
       <section id="brands" className="py-20 md:py-32 border-y border-white/5" data-testid="brands-section" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center">
-          <h2 className="text-3xl sm:text-4xl font-semibold font-['Outfit'] tracking-tight mb-4" style={{ color: settings.text_color }} data-testid="brands-title">
+          <h2 className={`${getHeadingSize('h2')} font-semibold tracking-tight mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="brands-title">
             {t('brands_title')}
           </h2>
-          <p style={{ color: settings.text_secondary_color }} data-testid="brands-subtitle">{t('brands_subtitle')}</p>
+          <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="brands-subtitle">{t('brands_subtitle')}</p>
         </div>
         
         {brands.length > 0 && (
@@ -297,10 +338,10 @@ export default function Landing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Contact Info */}
             <div>
-              <h2 className="text-3xl sm:text-4xl font-semibold font-['Outfit'] tracking-tight mb-4" style={{ color: settings.text_color }} data-testid="contact-title">
+              <h2 className={`${getHeadingSize('h2')} font-semibold tracking-tight mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="contact-title">
                 {t('contact_title')}
               </h2>
-              <p className="mb-8" style={{ color: settings.text_secondary_color }} data-testid="contact-subtitle">{t('contact_subtitle')}</p>
+              <p className={`${getBodySize()} mb-8`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="contact-subtitle">{t('contact_subtitle')}</p>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -308,8 +349,8 @@ export default function Landing() {
                     <MapPin style={{ color: settings.primary_color }} size={20} />
                   </div>
                   <div>
-                    <h4 className="font-medium mb-1" style={{ color: settings.text_color }}>{t('footer_address')}</h4>
-                    <p style={{ color: settings.text_secondary_color }}>İstanbul, Türkiye</p>
+                    <h4 className="font-medium mb-1" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{t('footer_address')}</h4>
+                    <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>İstanbul, Türkiye</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -317,8 +358,8 @@ export default function Landing() {
                     <Phone style={{ color: settings.primary_color }} size={20} />
                   </div>
                   <div>
-                    <h4 className="font-medium mb-1" style={{ color: settings.text_color }}>{t('footer_phone')}</h4>
-                    <p style={{ color: settings.text_secondary_color }}>+90 212 XXX XX XX</p>
+                    <h4 className="font-medium mb-1" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{t('footer_phone')}</h4>
+                    <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>+90 212 XXX XX XX</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -326,8 +367,8 @@ export default function Landing() {
                     <Mail style={{ color: settings.primary_color }} size={20} />
                   </div>
                   <div>
-                    <h4 className="font-medium mb-1" style={{ color: settings.text_color }}>{t('footer_email')}</h4>
-                    <p style={{ color: settings.text_secondary_color }}>info@atera.com.tr</p>
+                    <h4 className="font-medium mb-1" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{t('footer_email')}</h4>
+                    <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>info@atera.com.tr</p>
                   </div>
                 </div>
               </div>
@@ -344,7 +385,7 @@ export default function Landing() {
                     onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                     required
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
                     data-testid="contact-name-input"
                   />
                 </div>
@@ -356,7 +397,7 @@ export default function Landing() {
                     onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                     required
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
                     data-testid="contact-email-input"
                   />
                 </div>
@@ -367,7 +408,7 @@ export default function Landing() {
                     value={contactForm.phone}
                     onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
                     data-testid="contact-phone-input"
                   />
                 </div>
@@ -379,7 +420,7 @@ export default function Landing() {
                     required
                     rows={4}
                     className="w-full px-4 py-3 rounded-lg resize-none border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color }}
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
                     data-testid="contact-message-input"
                   />
                 </div>
@@ -402,9 +443,9 @@ export default function Landing() {
       <footer className="py-12 px-6 md:px-12 border-t border-white/10" data-testid="footer" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold font-['Outfit']" style={{ color: settings.text_color }}>ATERA</span>
+            <span className="text-xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>ATERA</span>
           </div>
-          <p className="text-sm" style={{ color: settings.text_secondary_color }}>
+          <p className={`${getBodySize()} text-sm`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
             © {new Date().getFullYear()} Atera. {t('footer_rights')}
           </p>
         </div>
