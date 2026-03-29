@@ -402,19 +402,29 @@ export default function Landing() {
         
         {brands.length > 0 && (
           <Marquee gradient={false} speed={40} pauseOnHover data-testid="brands-marquee">
-            {brands.concat(brands).map((brand, index) => (
-              <div key={`${brand.id}-${index}`} className="mx-12 flex items-center justify-center">
-                <div className="flex items-center justify-center bg-white/5 rounded-xl p-5" style={{ width: '216px', height: '108px' }}>
-                  <img
-                    src={brand.url}
-                    alt={brand.name}
-                    className="brand-logo max-w-full object-contain"
-                    style={{ maxHeight: '65px' }}
-                    data-testid={`brand-logo-${brand.name.toLowerCase()}`}
-                  />
+            {brands.concat(brands).map((brand, index) => {
+              const isLargeBrand = brand.name.toUpperCase() === 'HP' || brand.name.toUpperCase() === 'DELL';
+              return (
+                <div key={`${brand.id}-${index}`} className="mx-12 flex items-center justify-center">
+                  <div 
+                    className="flex items-center justify-center bg-white/5 rounded-xl"
+                    style={{ 
+                      width: isLargeBrand ? '216px' : '160px', 
+                      height: isLargeBrand ? '108px' : '80px',
+                      padding: isLargeBrand ? '20px' : '16px'
+                    }}
+                  >
+                    <img
+                      src={brand.url}
+                      alt={brand.name}
+                      className="brand-logo max-w-full object-contain"
+                      style={{ maxHeight: isLargeBrand ? '65px' : '48px' }}
+                      data-testid={`brand-logo-${brand.name.toLowerCase()}`}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </Marquee>
         )}
       </section>
