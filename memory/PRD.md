@@ -13,41 +13,53 @@ Build a one-page landing site for atera.com.tr similar to laptop.co.nz. Business
 - Contact form with email integration
 - Turkish/English language support
 - Admin panel for content management
+- Full visual customization from Admin Dashboard
 
-## What's Been Implemented (Dec 2025)
+## What's Been Implemented
 
 ### Landing Page
 - [x] Hero carousel with auto-slide (5s interval)
 - [x] Navigation with smooth scroll to sections
 - [x] Language switcher (TR/EN) with localStorage persistence
 - [x] Products section (Laptops, Gaming Desk, Monitor Arms)
-- [x] Brand partners marquee (HP, Lenovo, Dell, VIYERO)
+- [x] Brand partners marquee (HP, Lenovo, Dell, VIYERO) - HP & Dell 35% larger
 - [x] Contact form with validation
 - [x] Mobile responsive with hamburger menu
 - [x] Glassmorphism header design
+- [x] Dynamic color, font, and text shadow support from Admin settings
 
 ### Admin Panel
-- [x] JWT cookie authentication
+- [x] JWT localStorage authentication (Bearer token)
 - [x] Banner CRUD (add, edit, delete, toggle active)
 - [x] Brand CRUD (add, edit, delete, toggle active)
 - [x] Contact messages view (mark as read, delete)
 - [x] Logout functionality
+- [x] Color settings: background, surface, header, header_text_color, primary, text, secondary
+- [x] Font settings: heading font, body font
+- [x] Text shadow settings: banner text shadow (active, color, opacity, blur, x, y)
+- [x] Menu shadow/bold, Hero subtitle shadow/bold, Brands subtitle shadow/bold
+- [x] Burger menu color control
+- [x] Logo URL and text settings (logo height 95%)
+- [x] Menu text editing (TR/EN)
+- [x] Header/Menu text color (header_text_color) - Feb 2026
 
 ### Backend
-- [x] FastAPI with MongoDB
-- [x] JWT authentication with httpOnly cookies
+- [x] FastAPI with MongoDB (Motor async)
+- [x] JWT authentication with localStorage Bearer token
 - [x] Auto-seeding admin user and default content
 - [x] Public and protected API routes
+- [x] UptimeRobot /api/uptime/ping endpoint
+
+### Deployment
+- [x] Render (Static Site for Frontend, Web Service for Backend)
+- [x] MongoDB Atlas integration
+- [x] GitHub auto-deploy from main branch
 
 ## Prioritized Backlog
-
-### P0 (Critical) - DONE
-- All core features implemented
 
 ### P1 (High Priority)
 - [ ] Resend email integration for contact form
 - [ ] Admin image upload (currently using URL)
-- [ ] Atera logo replacement (user to provide)
 
 ### P2 (Medium Priority)
 - [ ] Product categories management
@@ -56,9 +68,20 @@ Build a one-page landing site for atera.com.tr similar to laptop.co.nz. Business
 
 ## Tech Stack
 - Frontend: React + TailwindCSS + Shadcn UI
-- Backend: FastAPI + MongoDB
-- Auth: JWT with httpOnly cookies
+- Backend: FastAPI + MongoDB (Motor)
+- Auth: JWT with localStorage Bearer tokens
+- Deployment: Render + MongoDB Atlas + GitHub
 
 ## Admin Credentials
-- Email: admin@atera.com.tr
+- Email: ozan.yolcu@atera.com.tr
 - Password: admin123
+
+## Key API Endpoints
+- POST /api/auth/login (returns access_token)
+- GET /api/auth/me
+- GET /api/public/settings
+- PUT /api/admin/settings
+- GET /api/uptime/ping
+
+## Database Collections
+- users, settings, banners, brands, contacts
