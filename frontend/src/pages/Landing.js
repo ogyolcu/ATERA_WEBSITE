@@ -19,6 +19,7 @@ export default function Landing() {
     background_color: '#0A0A0A',
     surface_color: '#141414',
     header_color: '#0A0A0A',
+    header_text_color: '#A1A1AA',
     primary_color: '#007AFF',
     text_color: '#FFFFFF',
     text_secondary_color: '#A1A1AA',
@@ -217,16 +218,16 @@ export default function Landing() {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-products">
+              <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-products">
                 {language === 'tr' ? settings.menu_products_tr : settings.menu_products_en}
               </button>
-              <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-brands">
+              <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-brands">
                 {language === 'tr' ? settings.menu_brands_tr : settings.menu_brands_en}
               </button>
-              <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-contact">
+              <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-contact">
                 {language === 'tr' ? settings.menu_contact_tr : settings.menu_contact_en}
               </button>
-              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-admin">
+              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-admin">
                 {t('nav_admin')}
               </Link>
             </nav>

@@ -158,6 +158,7 @@ class SiteSettings(BaseModel):
     background_color: str = "#0A0A0A"
     surface_color: str = "#141414"
     header_color: str = "#0A0A0A"
+    header_text_color: str = "#A1A1AA"
     primary_color: str = "#007AFF"
     text_color: str = "#FFFFFF"
     text_secondary_color: str = "#A1A1AA"
@@ -222,6 +223,7 @@ class SiteSettingsUpdate(BaseModel):
     background_color: Optional[str] = None
     surface_color: Optional[str] = None
     header_color: Optional[str] = None
+    header_text_color: Optional[str] = None
     primary_color: Optional[str] = None
     text_color: Optional[str] = None
     text_secondary_color: Optional[str] = None
