@@ -209,7 +209,7 @@ export default function Landing() {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2" data-testid="logo">
               {settings.logo_url ? (
-                <img src={settings.logo_url} alt={settings.logo_text} className="h-8 object-contain" />
+                <img src={settings.logo_url} alt={settings.logo_text} className="object-contain" style={{ height: '95%', maxHeight: '52px' }} />
               ) : (
                 <span className="text-2xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.logo_text}</span>
               )}
