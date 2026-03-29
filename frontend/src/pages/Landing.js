@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Marquee from 'react-fast-marquee';
-import { ChevronLeft, ChevronRight, Monitor, Laptop, Gamepad2, Mail, Phone, MapPin, Menu, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Monitor, Laptop, Gamepad2, Mail, MapPin, Menu, X } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -69,11 +69,19 @@ export default function Landing() {
     menu_brands_tr: 'Markalar',
     menu_brands_en: 'Brands',
     menu_contact_tr: 'İletişim',
-    menu_contact_en: 'Contact'
+    menu_contact_en: 'Contact',
+    contact_title_tr: 'İletişim',
+    contact_title_en: 'Contact',
+    contact_subtitle_tr: 'Sorularınız için bize ulaşın',
+    contact_subtitle_en: 'Get in touch with us',
+    contact_address: 'İstanbul, Türkiye',
+    contact_title_color: '#FFFFFF',
+    contact_subtitle_color: '#A1A1AA',
+    contact_address_color: '#A1A1AA'
   });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -115,7 +123,7 @@ export default function Landing() {
     try {
       await axios.post(`${API}/contact`, contactForm);
       toast.success(t('contact_success'));
-      setContactForm({ name: '', email: '', phone: '', message: '' });
+      setContactForm({ name: '', email: '', message: '' });
     } catch (error) {
       toast.error(t('contact_error'));
     } finally {
@@ -424,10 +432,10 @@ export default function Landing() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Contact Info */}
             <div>
-              <h2 className={`${getHeadingSize('h2')} font-semibold tracking-tight mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="contact-title">
-                {t('contact_title')}
+              <h2 className={`${getHeadingSize('h2')} font-semibold tracking-tight mb-4`} style={{ color: settings.contact_title_color, fontFamily: settings.heading_font }} data-testid="contact-title">
+                {language === 'tr' ? settings.contact_title_tr : settings.contact_title_en}
               </h2>
-              <p className={`${getBodySize()} mb-8`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="contact-subtitle">{t('contact_subtitle')}</p>
+              <p className={`${getBodySize()} mb-8`} style={{ color: settings.contact_subtitle_color, fontFamily: settings.body_font }} data-testid="contact-subtitle">{language === 'tr' ? settings.contact_subtitle_tr : settings.contact_subtitle_en}</p>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -435,17 +443,8 @@ export default function Landing() {
                     <MapPin style={{ color: settings.primary_color }} size={20} />
                   </div>
                   <div>
-                    <h4 className="font-medium mb-1" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{t('footer_address')}</h4>
-                    <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>İstanbul, Türkiye</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${settings.primary_color}33` }}>
-                    <Phone style={{ color: settings.primary_color }} size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{t('footer_phone')}</h4>
-                    <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>+90 212 XXX XX XX</p>
+                    <h4 className="font-medium mb-1" style={{ color: settings.contact_title_color, fontFamily: settings.heading_font }}>{t('footer_address')}</h4>
+                    <p className={getBodySize()} style={{ color: settings.contact_address_color, fontFamily: settings.body_font }}>{settings.contact_address}</p>
                   </div>
                 </div>
               </div>
@@ -476,17 +475,6 @@ export default function Landing() {
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
                     style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
                     data-testid="contact-email-input"
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="tel"
-                    placeholder={t('contact_phone')}
-                    value={contactForm.phone}
-                    onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
-                    data-testid="contact-phone-input"
                   />
                 </div>
                 <div>

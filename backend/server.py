@@ -218,6 +218,15 @@ class SiteSettings(BaseModel):
     menu_brands_en: str = "Brands"
     menu_contact_tr: str = "İletişim"
     menu_contact_en: str = "Contact"
+    # Contact Section
+    contact_title_tr: str = "İletişim"
+    contact_title_en: str = "Contact"
+    contact_subtitle_tr: str = "Sorularınız için bize ulaşın"
+    contact_subtitle_en: str = "Get in touch with us"
+    contact_address: str = "İstanbul, Türkiye"
+    contact_title_color: str = "#FFFFFF"
+    contact_subtitle_color: str = "#A1A1AA"
+    contact_address_color: str = "#A1A1AA"
 
 class SiteSettingsUpdate(BaseModel):
     background_color: Optional[str] = None
@@ -274,6 +283,14 @@ class SiteSettingsUpdate(BaseModel):
     menu_brands_en: Optional[str] = None
     menu_contact_tr: Optional[str] = None
     menu_contact_en: Optional[str] = None
+    contact_title_tr: Optional[str] = None
+    contact_title_en: Optional[str] = None
+    contact_subtitle_tr: Optional[str] = None
+    contact_subtitle_en: Optional[str] = None
+    contact_address: Optional[str] = None
+    contact_title_color: Optional[str] = None
+    contact_subtitle_color: Optional[str] = None
+    contact_address_color: Optional[str] = None
 
 # Auth Endpoints
 @auth_router.post("/login")

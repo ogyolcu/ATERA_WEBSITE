@@ -77,7 +77,15 @@ export default function AdminDashboard() {
     menu_brands_tr: 'Markalar',
     menu_brands_en: 'Brands',
     menu_contact_tr: 'İletişim',
-    menu_contact_en: 'Contact'
+    menu_contact_en: 'Contact',
+    contact_title_tr: 'İletişim',
+    contact_title_en: 'Contact',
+    contact_subtitle_tr: 'Sorularınız için bize ulaşın',
+    contact_subtitle_en: 'Get in touch with us',
+    contact_address: 'İstanbul, Türkiye',
+    contact_title_color: '#FFFFFF',
+    contact_subtitle_color: '#A1A1AA',
+    contact_address_color: '#A1A1AA'
   });
   const [savingSettings, setSavingSettings] = useState(false);
   const [activeSettingsTab, setActiveSettingsTab] = useState('colors');
@@ -915,6 +923,58 @@ export default function AdminDashboard() {
                           </div>
                         </div>
                       )}
+                    </div>
+
+                    {/* Contact Section Settings */}
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h3 className="text-white font-medium mb-4">İletişim Bölümü</h3>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (TR)</label>
+                          <Input value={settings.contact_title_tr} onChange={(e) => setSettings({ ...settings, contact_title_tr: e.target.value })} className="dark-input" data-testid="contact-title-tr-input" />
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (EN)</label>
+                          <Input value={settings.contact_title_en} onChange={(e) => setSettings({ ...settings, contact_title_en: e.target.value })} className="dark-input" data-testid="contact-title-en-input" />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Alt Başlık (TR)</label>
+                          <Input value={settings.contact_subtitle_tr} onChange={(e) => setSettings({ ...settings, contact_subtitle_tr: e.target.value })} className="dark-input" data-testid="contact-subtitle-tr-input" />
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Alt Başlık (EN)</label>
+                          <Input value={settings.contact_subtitle_en} onChange={(e) => setSettings({ ...settings, contact_subtitle_en: e.target.value })} className="dark-input" data-testid="contact-subtitle-en-input" />
+                        </div>
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Adres</label>
+                        <Input value={settings.contact_address} onChange={(e) => setSettings({ ...settings, contact_address: e.target.value })} className="dark-input" data-testid="contact-address-input" />
+                      </div>
+                      <div className="grid grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık Rengi</label>
+                          <div className="flex items-center gap-2">
+                            <input type="color" value={settings.contact_title_color} onChange={(e) => setSettings({ ...settings, contact_title_color: e.target.value })} className="w-10 h-10 rounded cursor-pointer border-0" />
+                            <Input value={settings.contact_title_color} onChange={(e) => setSettings({ ...settings, contact_title_color: e.target.value })} className="dark-input flex-1" />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Alt Başlık Rengi</label>
+                          <div className="flex items-center gap-2">
+                            <input type="color" value={settings.contact_subtitle_color} onChange={(e) => setSettings({ ...settings, contact_subtitle_color: e.target.value })} className="w-10 h-10 rounded cursor-pointer border-0" />
+                            <Input value={settings.contact_subtitle_color} onChange={(e) => setSettings({ ...settings, contact_subtitle_color: e.target.value })} className="dark-input flex-1" />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Adres Rengi</label>
+                          <div className="flex items-center gap-2">
+                            <input type="color" value={settings.contact_address_color} onChange={(e) => setSettings({ ...settings, contact_address_color: e.target.value })} className="w-10 h-10 rounded cursor-pointer border-0" />
+                            <Input value={settings.contact_address_color} onChange={(e) => setSettings({ ...settings, contact_address_color: e.target.value })} className="dark-input flex-1" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
