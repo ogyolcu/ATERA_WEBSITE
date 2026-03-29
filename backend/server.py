@@ -453,20 +453,8 @@ async def startup_event():
         await db.brands.insert_many(default_brands)
         logger.info("Default brands seeded")
     
-    # Write test credentials
-    import os as os_module
-    os_module.makedirs("/app/memory", exist_ok=True)
-    with open("/app/memory/test_credentials.md", "w") as f:
-        f.write(f"# Test Credentials\n\n")
-        f.write(f"## Admin\n")
-        f.write(f"- Email: {admin_email}\n")
-        f.write(f"- Password: {admin_password}\n")
-        f.write(f"- Role: admin\n\n")
-        f.write(f"## Auth Endpoints\n")
-        f.write(f"- POST /api/auth/login\n")
-        f.write(f"- POST /api/auth/logout\n")
-        f.write(f"- GET /api/auth/me\n")
-        f.write(f"- POST /api/auth/refresh\n")
+    # Log credentials (skip file write on Render)
+    logger.info(f"Admin credentials - Email: {admin_email}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
