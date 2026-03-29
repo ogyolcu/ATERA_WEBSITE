@@ -299,14 +299,6 @@ export default function Landing() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button 
-                  onClick={() => scrollToSection('products')}
-                  className="text-white px-8 py-3 rounded-lg font-medium"
-                  style={{ backgroundColor: settings.primary_color }}
-                  data-testid="hero-cta"
-                >
-                  {t('hero_cta')}
-                </Button>
-                <Button 
                   onClick={() => scrollToSection('contact')}
                   variant="outline"
                   className="border-white/20 hover:bg-white/10 px-8 py-3 rounded-lg font-medium"
