@@ -19,11 +19,12 @@ Build a one-page landing site for atera.com.tr similar to laptop.co.nz. Business
 
 ### Landing Page
 - [x] Hero carousel with auto-slide (5s interval)
-- [x] Navigation with smooth scroll to sections
+- [x] Navigation with smooth scroll (Ürünler, Markalar, İletişim - no Yönetim link)
 - [x] Language switcher (TR/EN) with localStorage persistence
 - [x] Products section (Laptops, Gaming Desk, Monitor Arms)
 - [x] Brand partners marquee (HP, Lenovo, Dell, VIYERO) - HP & Dell 35% larger
-- [x] Contact form with validation
+- [x] Contact form (name, email, message - phone removed)
+- [x] Contact info with editable address (phone removed)
 - [x] Mobile responsive with hamburger menu
 - [x] Glassmorphism header design
 - [x] Dynamic color, font, and text shadow support from Admin settings
@@ -33,15 +34,11 @@ Build a one-page landing site for atera.com.tr similar to laptop.co.nz. Business
 - [x] Banner CRUD (add, edit, delete, toggle active)
 - [x] Brand CRUD (add, edit, delete, toggle active)
 - [x] Contact messages view (mark as read, delete)
-- [x] Logout functionality
 - [x] Color settings: background, surface, header, header_text_color, primary, text, secondary
 - [x] Font settings: heading font, body font
-- [x] Text shadow settings: banner text shadow (active, color, opacity, blur, x, y)
-- [x] Menu shadow/bold, Hero subtitle shadow/bold, Brands subtitle shadow/bold
-- [x] Burger menu color control
-- [x] Logo URL and text settings (logo height 95%)
-- [x] Menu text editing (TR/EN)
-- [x] Header/Menu text color (header_text_color) - Feb 2026
+- [x] Text shadow settings: banner text shadow, menu shadow/bold, brands subtitle shadow/bold
+- [x] Burger menu color control, Logo URL/text, Menu text editing (TR/EN)
+- [x] Contact section settings: title TR/EN, subtitle TR/EN, address, title/subtitle/address colors
 
 ### Backend
 - [x] FastAPI with MongoDB (Motor async)
