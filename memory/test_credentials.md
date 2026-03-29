@@ -1,7 +1,7 @@
 # Test Credentials
 
 ## Admin
-- Email: admin@atera.com.tr
+- Email: ozan.yolcu@atera.com.tr
 - Password: admin123
 - Role: admin
 
