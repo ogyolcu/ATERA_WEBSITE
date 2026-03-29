@@ -1,12 +1,30 @@
+# Environment files
+.env
+*.env
+backend/.env
+frontend/.env
+
+# Dependencies
 node_modules/
 __pycache__/
 *.pyc
-.env
-*.log
-.DS_Store
+venv/
+.venv/
+
+# Build
 build/
 dist/
 *.egg-info/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# Test
 .pytest_cache/
-venv/
-.venv/
+test_reports/
+
+# Memory
+memory/
