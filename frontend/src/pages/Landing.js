@@ -227,9 +227,6 @@ export default function Landing() {
               <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-contact">
                 {language === 'tr' ? settings.menu_contact_tr : settings.menu_contact_en}
               </button>
-              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-admin">
-                {t('nav_admin')}
-              </Link>
             </nav>
 
             {/* Language Switcher + Mobile Menu */}
@@ -272,7 +269,6 @@ export default function Landing() {
               <button onClick={() => scrollToSection('products')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_products_tr : settings.menu_products_en}</button>
               <button onClick={() => scrollToSection('brands')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_brands_tr : settings.menu_brands_en}</button>
               <button onClick={() => scrollToSection('contact')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_contact_tr : settings.menu_contact_en}</button>
-              <Link to="/admin" className="py-2" style={{ color: settings.text_color }}>{t('nav_admin')}</Link>
             </nav>
           </div>
         )}
