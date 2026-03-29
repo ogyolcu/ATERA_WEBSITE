@@ -30,6 +30,8 @@ export default function AdminDashboard() {
     primary_color: '#007AFF',
     text_color: '#FFFFFF',
     text_secondary_color: '#A1A1AA',
+    logo_url: '',
+    logo_text: 'ATERA',
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -461,6 +463,13 @@ export default function AdminDashboard() {
                 Renkler
               </Button>
               <Button 
+                variant={activeSettingsTab === 'logo' ? 'default' : 'ghost'}
+                onClick={() => setActiveSettingsTab('logo')}
+                className={activeSettingsTab === 'logo' ? 'bg-[#007AFF]' : ''}
+              >
+                Logo
+              </Button>
+              <Button 
                 variant={activeSettingsTab === 'fonts' ? 'default' : 'ghost'}
                 onClick={() => setActiveSettingsTab('fonts')}
                 className={activeSettingsTab === 'fonts' ? 'bg-[#007AFF]' : ''}
@@ -538,6 +547,35 @@ export default function AdminDashboard() {
                         <Input value={settings.text_secondary_color} onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {/* Logo */}
+                {activeSettingsTab === 'logo' && (
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Logo URL (boş bırakırsanız metin kullanılır)</label>
+                      <Input 
+                        value={settings.logo_url} 
+                        onChange={(e) => setSettings({ ...settings, logo_url: e.target.value })} 
+                        className="dark-input" 
+                        placeholder="https://example.com/logo.png"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Logo Metni (görsel yoksa gösterilir)</label>
+                      <Input 
+                        value={settings.logo_text} 
+                        onChange={(e) => setSettings({ ...settings, logo_text: e.target.value })} 
+                        className="dark-input" 
+                      />
+                    </div>
+                    {settings.logo_url && (
+                      <div className="p-4 bg-black/20 rounded-xl">
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Önizleme</label>
+                        <img src={settings.logo_url} alt="Logo Preview" className="h-12 object-contain" />
+                      </div>
+                    )}
                   </div>
                 )}
 

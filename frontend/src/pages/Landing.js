@@ -22,6 +22,8 @@ export default function Landing() {
     primary_color: '#007AFF',
     text_color: '#FFFFFF',
     text_secondary_color: '#A1A1AA',
+    logo_url: '',
+    logo_text: 'ATERA',
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -148,7 +150,11 @@ export default function Landing() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2" data-testid="logo">
-              <span className="text-2xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>ATERA</span>
+              {settings.logo_url ? (
+                <img src={settings.logo_url} alt={settings.logo_text} className="h-8 object-contain" />
+              ) : (
+                <span className="text-2xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.logo_text}</span>
+              )}
             </Link>
 
             {/* Desktop Nav */}
@@ -456,7 +462,11 @@ export default function Landing() {
       <footer className="py-12 px-6 md:px-12 border-t border-white/10" data-testid="footer" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>ATERA</span>
+            {settings.logo_url ? (
+              <img src={settings.logo_url} alt={settings.logo_text} className="h-6 object-contain" />
+            ) : (
+              <span className="text-xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.logo_text}</span>
+            )}
           </div>
           <p className={`${getBodySize()} text-sm`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
             © {new Date().getFullYear()} Atera. {t('footer_rights')}

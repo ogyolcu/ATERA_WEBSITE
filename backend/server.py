@@ -161,6 +161,9 @@ class SiteSettings(BaseModel):
     primary_color: str = "#007AFF"
     text_color: str = "#FFFFFF"
     text_secondary_color: str = "#A1A1AA"
+    # Logo
+    logo_url: str = ""
+    logo_text: str = "ATERA"
     # Fonts
     heading_font: str = "Outfit"
     body_font: str = "Manrope"
@@ -196,6 +199,8 @@ class SiteSettingsUpdate(BaseModel):
     primary_color: Optional[str] = None
     text_color: Optional[str] = None
     text_secondary_color: Optional[str] = None
+    logo_url: Optional[str] = None
+    logo_text: Optional[str] = None
     heading_font: Optional[str] = None
     body_font: Optional[str] = None
     heading_size: Optional[str] = None
