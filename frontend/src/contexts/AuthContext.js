@@ -5,6 +5,15 @@ const AuthContext = createContext(null);
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+// Set up axios interceptor for auth header
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem('access_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); // null = checking, false = not auth, object = auth
   const [loading, setLoading] = useState(true);
@@ -14,14 +23,19 @@ export function AuthProvider({ children }) {
   }, []);
 
   const checkAuth = async () => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      setUser(false);
+      setLoading(false);
+      return;
+    }
     try {
-      const response = await axios.get(`${API}/auth/me`, { 
-        withCredentials: true,
-        timeout: 5000 
-      });
+      const response = await axios.get(`${API}/auth/me`);
       setUser(response.data);
     } catch (error) {
       console.log('Auth check failed:', error.message);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
       setUser(false);
     } finally {
       setLoading(false);
@@ -29,30 +43,39 @@ export function AuthProvider({ children }) {
   };
 
   const login = async (email, password) => {
-    const response = await axios.post(
-      `${API}/auth/login`,
-      { email, password },
-      { withCredentials: true }
-    );
-    setUser(response.data);
-    return response.data;
+    const response = await axios.post(`${API}/auth/login`, { email, password });
+    const { access_token, refresh_token, ...userData } = response.data;
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh_token', refresh_token);
+    setUser(userData);
+    return userData;
   };
 
   const logout = async () => {
     try {
-      await axios.post(`${API}/auth/logout`, {}, { withCredentials: true });
+      await axios.post(`${API}/auth/logout`);
     } catch (error) {
       console.error('Logout error:', error);
     }
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     setUser(false);
   };
 
   const refreshToken = async () => {
+    const token = localStorage.getItem('refresh_token');
+    if (!token) {
+      setUser(false);
+      return false;
+    }
     try {
-      await axios.post(`${API}/auth/refresh`, {}, { withCredentials: true });
+      const response = await axios.post(`${API}/auth/refresh`, { refresh_token: token });
+      localStorage.setItem('access_token', response.data.access_token);
       await checkAuth();
       return true;
     } catch (error) {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
       setUser(false);
       return false;
     }
