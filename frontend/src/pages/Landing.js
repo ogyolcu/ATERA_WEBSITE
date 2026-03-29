@@ -404,11 +404,12 @@ export default function Landing() {
           <Marquee gradient={false} speed={40} pauseOnHover data-testid="brands-marquee">
             {brands.concat(brands).map((brand, index) => (
               <div key={`${brand.id}-${index}`} className="mx-12 flex items-center justify-center">
-                <div className="w-40 h-20 flex items-center justify-center bg-white/5 rounded-xl p-4">
+                <div className="flex items-center justify-center bg-white/5 rounded-xl p-5" style={{ width: '216px', height: '108px' }}>
                   <img
                     src={brand.url}
                     alt={brand.name}
-                    className="brand-logo max-h-12 max-w-full object-contain"
+                    className="brand-logo max-w-full object-contain"
+                    style={{ maxHeight: '65px' }}
                     data-testid={`brand-logo-${brand.name.toLowerCase()}`}
                   />
                 </div>
