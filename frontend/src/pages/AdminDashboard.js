@@ -26,6 +26,7 @@ export default function AdminDashboard() {
   const [settings, setSettings] = useState({
     background_color: '#0A0A0A',
     surface_color: '#141414',
+    header_color: '#0A0A0A',
     primary_color: '#007AFF',
     text_color: '#FFFFFF',
     text_secondary_color: '#A1A1AA',
@@ -500,6 +501,13 @@ export default function AdminDashboard() {
                       <div className="flex items-center gap-3">
                         <input type="color" value={settings.background_color} onChange={(e) => setSettings({ ...settings, background_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
                         <Input value={settings.background_color} onChange={(e) => setSettings({ ...settings, background_color: e.target.value })} className="dark-input flex-1" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Üst Menü Rengi</label>
+                      <div className="flex items-center gap-3">
+                        <input type="color" value={settings.header_color} onChange={(e) => setSettings({ ...settings, header_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.header_color} onChange={(e) => setSettings({ ...settings, header_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
                     <div>

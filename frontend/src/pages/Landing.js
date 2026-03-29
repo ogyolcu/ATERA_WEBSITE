@@ -18,6 +18,7 @@ export default function Landing() {
   const [settings, setSettings] = useState({
     background_color: '#0A0A0A',
     surface_color: '#141414',
+    header_color: '#0A0A0A',
     primary_color: '#007AFF',
     text_color: '#FFFFFF',
     text_secondary_color: '#A1A1AA',
@@ -142,7 +143,7 @@ export default function Landing() {
       />
       
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 header-glass" data-testid="header" style={{ backgroundColor: `${settings.background_color}99` }}>
+      <header className="fixed top-0 left-0 right-0 z-50" data-testid="header" style={{ backgroundColor: settings.header_color, backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
