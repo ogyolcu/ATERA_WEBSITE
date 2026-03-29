@@ -334,6 +334,10 @@ async def update_settings(settings: SiteSettingsUpdate, user: dict = Depends(get
 async def root():
     return {"message": "Atera API"}
 
+@api_router.get("/uptime/ping")
+async def uptime_ping():
+    return {"status": "ok", "message": "pong"}
+
 @api_router.get("/public/banners", response_model=List[CarouselBanner])
 async def get_public_banners():
     banners = await db.banners.find({"active": True}, {"_id": 0}).sort("order", 1).to_list(100)
