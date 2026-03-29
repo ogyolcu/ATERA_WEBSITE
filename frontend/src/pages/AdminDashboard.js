@@ -38,6 +38,22 @@ export default function AdminDashboard() {
     banner_shadow_x: 2,
     banner_shadow_y: 2,
     banner_shadow_opacity: 50,
+    banner_subtitle_bold: false,
+    banner_subtitle_shadow_enabled: false,
+    banner_subtitle_shadow_color: '#000000',
+    banner_subtitle_shadow_blur: 5,
+    banner_subtitle_shadow_opacity: 50,
+    menu_bold: false,
+    menu_shadow_enabled: false,
+    menu_shadow_color: '#000000',
+    menu_shadow_blur: 5,
+    menu_shadow_opacity: 50,
+    menu_burger_color: '#FFFFFF',
+    brands_subtitle_bold: false,
+    brands_subtitle_shadow_enabled: false,
+    brands_subtitle_shadow_color: '#000000',
+    brands_subtitle_shadow_blur: 5,
+    brands_subtitle_shadow_opacity: 50,
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -757,109 +773,140 @@ export default function AdminDashboard() {
 
                 {/* Text Shadow */}
                 {activeSettingsTab === 'shadow' && (
-                  <div className="space-y-6">
-                    <h3 className="text-white font-medium">Banner Text Shadow Ayarları</h3>
-                    
-                    <div className="flex items-center gap-3">
-                      <Switch
-                        checked={settings.banner_shadow_enabled}
-                        onCheckedChange={(checked) => setSettings({ ...settings, banner_shadow_enabled: checked })}
-                      />
-                      <label className="text-white">Shadow Aktif</label>
-                    </div>
-                    
-                    {settings.banner_shadow_enabled && (
-                      <div className="grid grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Shadow Rengi</label>
-                          <div className="flex items-center gap-3">
-                            <input 
-                              type="color" 
-                              value={settings.banner_shadow_color} 
-                              onChange={(e) => setSettings({ ...settings, banner_shadow_color: e.target.value })} 
-                              className="w-12 h-12 rounded-lg cursor-pointer border-0" 
-                            />
-                            <Input 
-                              value={settings.banner_shadow_color} 
-                              onChange={(e) => setSettings({ ...settings, banner_shadow_color: e.target.value })} 
-                              className="dark-input flex-1" 
-                            />
+                  <div className="space-y-8">
+                    {/* Banner Title Shadow */}
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h3 className="text-white font-medium mb-4">Banner Başlık Shadow</h3>
+                      <div className="flex items-center gap-3 mb-4">
+                        <Switch checked={settings.banner_shadow_enabled} onCheckedChange={(checked) => setSettings({ ...settings, banner_shadow_enabled: checked })} />
+                        <label className="text-white">Aktif</label>
+                      </div>
+                      {settings.banner_shadow_enabled && (
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Renk</label>
+                            <div className="flex items-center gap-2">
+                              <input type="color" value={settings.banner_shadow_color} onChange={(e) => setSettings({ ...settings, banner_shadow_color: e.target.value })} className="w-10 h-10 rounded cursor-pointer border-0" />
+                              <Input value={settings.banner_shadow_color} onChange={(e) => setSettings({ ...settings, banner_shadow_color: e.target.value })} className="dark-input flex-1" />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.banner_shadow_opacity}%</label>
+                            <input type="range" min="0" max="100" value={settings.banner_shadow_opacity} onChange={(e) => setSettings({ ...settings, banner_shadow_opacity: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Blur: {settings.banner_shadow_blur}px</label>
+                            <input type="range" min="0" max="20" value={settings.banner_shadow_blur} onChange={(e) => setSettings({ ...settings, banner_shadow_blur: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">X: {settings.banner_shadow_x}px / Y: {settings.banner_shadow_y}px</label>
+                            <div className="flex gap-2">
+                              <input type="range" min="0" max="10" value={settings.banner_shadow_x} onChange={(e) => setSettings({ ...settings, banner_shadow_x: parseInt(e.target.value) })} className="w-1/2" />
+                              <input type="range" min="0" max="10" value={settings.banner_shadow_y} onChange={(e) => setSettings({ ...settings, banner_shadow_y: parseInt(e.target.value) })} className="w-1/2" />
+                            </div>
                           </div>
                         </div>
-                        
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.banner_shadow_opacity}%</label>
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="100" 
-                            value={settings.banner_shadow_opacity} 
-                            onChange={(e) => setSettings({ ...settings, banner_shadow_opacity: parseInt(e.target.value) })}
-                            className="w-full"
-                          />
+                      )}
+                    </div>
+
+                    {/* Banner Subtitle Shadow & Bold */}
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h3 className="text-white font-medium mb-4">Banner Alt Yazı (Subtitle)</h3>
+                      <div className="flex items-center gap-6 mb-4">
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.banner_subtitle_bold} onCheckedChange={(checked) => setSettings({ ...settings, banner_subtitle_bold: checked })} />
+                          <label className="text-white">Bold</label>
                         </div>
-                        
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Bulanıklık (Blur): {settings.banner_shadow_blur}px</label>
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="20" 
-                            value={settings.banner_shadow_blur} 
-                            onChange={(e) => setSettings({ ...settings, banner_shadow_blur: parseInt(e.target.value) })}
-                            className="w-full"
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Mesafe X: {settings.banner_shadow_x}px</label>
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="10" 
-                            value={settings.banner_shadow_x} 
-                            onChange={(e) => setSettings({ ...settings, banner_shadow_x: parseInt(e.target.value) })}
-                            className="w-full"
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Mesafe Y: {settings.banner_shadow_y}px</label>
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="10" 
-                            value={settings.banner_shadow_y} 
-                            onChange={(e) => setSettings({ ...settings, banner_shadow_y: parseInt(e.target.value) })}
-                            className="w-full"
-                          />
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.banner_subtitle_shadow_enabled} onCheckedChange={(checked) => setSettings({ ...settings, banner_subtitle_shadow_enabled: checked })} />
+                          <label className="text-white">Shadow</label>
                         </div>
                       </div>
-                    )}
-                    
-                    {/* Preview */}
-                    <div className="p-6 bg-black/30 rounded-xl mt-4">
-                      <label className="block text-sm text-[#A1A1AA] mb-4">Önizleme</label>
-                      <h2 
-                        className="text-3xl font-bold text-white"
-                        style={{
-                          textShadow: settings.banner_shadow_enabled 
-                            ? `${settings.banner_shadow_x}px ${settings.banner_shadow_y}px ${settings.banner_shadow_blur}px rgba(${parseInt(settings.banner_shadow_color.slice(1,3),16)},${parseInt(settings.banner_shadow_color.slice(3,5),16)},${parseInt(settings.banner_shadow_color.slice(5,7),16)},${settings.banner_shadow_opacity/100})`
-                            : 'none'
-                        }}
-                      >
-                        Örnek Banner Başlık
-                      </h2>
-                      <p 
-                        className="text-lg text-gray-300 mt-2"
-                        style={{
-                          textShadow: settings.banner_shadow_enabled 
-                            ? `${settings.banner_shadow_x}px ${settings.banner_shadow_y}px ${settings.banner_shadow_blur}px rgba(${parseInt(settings.banner_shadow_color.slice(1,3),16)},${parseInt(settings.banner_shadow_color.slice(3,5),16)},${parseInt(settings.banner_shadow_color.slice(5,7),16)},${settings.banner_shadow_opacity/100})`
-                            : 'none'
-                        }}
-                      >
-                        Örnek alt başlık metni
-                      </p>
+                      {settings.banner_subtitle_shadow_enabled && (
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Renk</label>
+                            <input type="color" value={settings.banner_subtitle_shadow_color} onChange={(e) => setSettings({ ...settings, banner_subtitle_shadow_color: e.target.value })} className="w-full h-10 rounded cursor-pointer border-0" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Blur: {settings.banner_subtitle_shadow_blur}px</label>
+                            <input type="range" min="0" max="20" value={settings.banner_subtitle_shadow_blur} onChange={(e) => setSettings({ ...settings, banner_subtitle_shadow_blur: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.banner_subtitle_shadow_opacity}%</label>
+                            <input type="range" min="0" max="100" value={settings.banner_subtitle_shadow_opacity} onChange={(e) => setSettings({ ...settings, banner_subtitle_shadow_opacity: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Menu Shadow & Bold */}
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h3 className="text-white font-medium mb-4">Menü Yazıları</h3>
+                      <div className="flex items-center gap-6 mb-4">
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.menu_bold} onCheckedChange={(checked) => setSettings({ ...settings, menu_bold: checked })} />
+                          <label className="text-white">Bold</label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.menu_shadow_enabled} onCheckedChange={(checked) => setSettings({ ...settings, menu_shadow_enabled: checked })} />
+                          <label className="text-white">Shadow</label>
+                        </div>
+                      </div>
+                      {settings.menu_shadow_enabled && (
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Renk</label>
+                            <input type="color" value={settings.menu_shadow_color} onChange={(e) => setSettings({ ...settings, menu_shadow_color: e.target.value })} className="w-full h-10 rounded cursor-pointer border-0" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Blur: {settings.menu_shadow_blur}px</label>
+                            <input type="range" min="0" max="20" value={settings.menu_shadow_blur} onChange={(e) => setSettings({ ...settings, menu_shadow_blur: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.menu_shadow_opacity}%</label>
+                            <input type="range" min="0" max="100" value={settings.menu_shadow_opacity} onChange={(e) => setSettings({ ...settings, menu_shadow_opacity: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                        </div>
+                      )}
+                      <div className="mt-4">
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Burger Menü İkon Rengi</label>
+                        <div className="flex items-center gap-2">
+                          <input type="color" value={settings.menu_burger_color} onChange={(e) => setSettings({ ...settings, menu_burger_color: e.target.value })} className="w-10 h-10 rounded cursor-pointer border-0" />
+                          <Input value={settings.menu_burger_color} onChange={(e) => setSettings({ ...settings, menu_burger_color: e.target.value })} className="dark-input w-32" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Brands Subtitle Shadow & Bold */}
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h3 className="text-white font-medium mb-4">Markalar Alt Yazı ("Dünya Liderlerinden...")</h3>
+                      <div className="flex items-center gap-6 mb-4">
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.brands_subtitle_bold} onCheckedChange={(checked) => setSettings({ ...settings, brands_subtitle_bold: checked })} />
+                          <label className="text-white">Bold</label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.brands_subtitle_shadow_enabled} onCheckedChange={(checked) => setSettings({ ...settings, brands_subtitle_shadow_enabled: checked })} />
+                          <label className="text-white">Shadow</label>
+                        </div>
+                      </div>
+                      {settings.brands_subtitle_shadow_enabled && (
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Renk</label>
+                            <input type="color" value={settings.brands_subtitle_shadow_color} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_color: e.target.value })} className="w-full h-10 rounded cursor-pointer border-0" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Blur: {settings.brands_subtitle_shadow_blur}px</label>
+                            <input type="range" min="0" max="20" value={settings.brands_subtitle_shadow_blur} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_blur: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.brands_subtitle_shadow_opacity}%</label>
+                            <input type="range" min="0" max="100" value={settings.brands_subtitle_shadow_opacity} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_opacity: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}

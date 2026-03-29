@@ -30,6 +30,22 @@ export default function Landing() {
     banner_shadow_x: 2,
     banner_shadow_y: 2,
     banner_shadow_opacity: 50,
+    banner_subtitle_bold: false,
+    banner_subtitle_shadow_enabled: false,
+    banner_subtitle_shadow_color: '#000000',
+    banner_subtitle_shadow_blur: 5,
+    banner_subtitle_shadow_opacity: 50,
+    menu_bold: false,
+    menu_shadow_enabled: false,
+    menu_shadow_color: '#000000',
+    menu_shadow_blur: 5,
+    menu_shadow_opacity: 50,
+    menu_burger_color: '#FFFFFF',
+    brands_subtitle_bold: false,
+    brands_subtitle_shadow_enabled: false,
+    brands_subtitle_shadow_color: '#000000',
+    brands_subtitle_shadow_blur: 5,
+    brands_subtitle_shadow_opacity: 50,
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -146,6 +162,33 @@ export default function Landing() {
     return `${settings.banner_shadow_x}px ${settings.banner_shadow_y}px ${settings.banner_shadow_blur}px rgba(${r},${g},${b},${opacity})`;
   };
 
+  const getBannerSubtitleShadow = () => {
+    if (!settings.banner_subtitle_shadow_enabled) return 'none';
+    const r = parseInt(settings.banner_subtitle_shadow_color.slice(1, 3), 16);
+    const g = parseInt(settings.banner_subtitle_shadow_color.slice(3, 5), 16);
+    const b = parseInt(settings.banner_subtitle_shadow_color.slice(5, 7), 16);
+    const opacity = settings.banner_subtitle_shadow_opacity / 100;
+    return `0px 0px ${settings.banner_subtitle_shadow_blur}px rgba(${r},${g},${b},${opacity})`;
+  };
+
+  const getMenuShadow = () => {
+    if (!settings.menu_shadow_enabled) return 'none';
+    const r = parseInt(settings.menu_shadow_color.slice(1, 3), 16);
+    const g = parseInt(settings.menu_shadow_color.slice(3, 5), 16);
+    const b = parseInt(settings.menu_shadow_color.slice(5, 7), 16);
+    const opacity = settings.menu_shadow_opacity / 100;
+    return `0px 0px ${settings.menu_shadow_blur}px rgba(${r},${g},${b},${opacity})`;
+  };
+
+  const getBrandsSubtitleShadow = () => {
+    if (!settings.brands_subtitle_shadow_enabled) return 'none';
+    const r = parseInt(settings.brands_subtitle_shadow_color.slice(1, 3), 16);
+    const g = parseInt(settings.brands_subtitle_shadow_color.slice(3, 5), 16);
+    const b = parseInt(settings.brands_subtitle_shadow_color.slice(5, 7), 16);
+    const opacity = settings.brands_subtitle_shadow_opacity / 100;
+    return `0px 0px ${settings.brands_subtitle_shadow_blur}px rgba(${r},${g},${b},${opacity})`;
+  };
+
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
@@ -174,16 +217,16 @@ export default function Landing() {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-products">
+              <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-products">
                 {language === 'tr' ? settings.menu_products_tr : settings.menu_products_en}
               </button>
-              <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-brands">
+              <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-brands">
                 {language === 'tr' ? settings.menu_brands_tr : settings.menu_brands_en}
               </button>
-              <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-contact">
+              <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-contact">
                 {language === 'tr' ? settings.menu_contact_tr : settings.menu_contact_en}
               </button>
-              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-admin">
+              <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-admin">
                 {t('nav_admin')}
               </Link>
             </nav>
@@ -212,7 +255,7 @@ export default function Landing() {
               <button 
                 className="md:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                style={{ color: settings.text_color }}
+                style={{ color: settings.menu_burger_color }}
                 data-testid="mobile-menu-toggle"
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -254,7 +297,7 @@ export default function Landing() {
               <h1 className={`${getHeadingSize('h1')} font-bold tracking-tighter mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font, textShadow: getBannerTextShadow() }} data-testid="hero-title">
                 {language === 'tr' ? banners[currentSlide]?.title_tr : banners[currentSlide]?.title_en}
               </h1>
-              <p className={`${getSubtitleSize()} mb-8 max-w-2xl`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, textShadow: getBannerTextShadow() }} data-testid="hero-subtitle">
+              <p className={`${getSubtitleSize()} mb-8 max-w-2xl`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, textShadow: getBannerSubtitleShadow(), fontWeight: settings.banner_subtitle_bold ? 'bold' : 'normal' }} data-testid="hero-subtitle">
                 {language === 'tr' ? banners[currentSlide]?.subtitle_tr : banners[currentSlide]?.subtitle_en}
               </p>
               <div className="flex flex-wrap gap-4">
@@ -352,7 +395,7 @@ export default function Landing() {
           <h2 className={`${getHeadingSize('h2')} font-semibold tracking-tight mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="brands-title">
             {language === 'tr' ? settings.brands_title_tr : settings.brands_title_en}
           </h2>
-          <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="brands-subtitle">
+          <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, textShadow: getBrandsSubtitleShadow(), fontWeight: settings.brands_subtitle_bold ? 'bold' : 'normal' }} data-testid="brands-subtitle">
             {language === 'tr' ? settings.brands_subtitle_tr : settings.brands_subtitle_en}
           </p>
         </div>

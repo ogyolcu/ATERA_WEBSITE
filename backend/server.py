@@ -171,6 +171,25 @@ class SiteSettings(BaseModel):
     banner_shadow_x: int = 2
     banner_shadow_y: int = 2
     banner_shadow_opacity: int = 50
+    # Banner Subtitle Style
+    banner_subtitle_bold: bool = False
+    banner_subtitle_shadow_enabled: bool = False
+    banner_subtitle_shadow_color: str = "#000000"
+    banner_subtitle_shadow_blur: int = 5
+    banner_subtitle_shadow_opacity: int = 50
+    # Menu Style
+    menu_bold: bool = False
+    menu_shadow_enabled: bool = False
+    menu_shadow_color: str = "#000000"
+    menu_shadow_blur: int = 5
+    menu_shadow_opacity: int = 50
+    menu_burger_color: str = "#FFFFFF"
+    # Brands Subtitle Style
+    brands_subtitle_bold: bool = False
+    brands_subtitle_shadow_enabled: bool = False
+    brands_subtitle_shadow_color: str = "#000000"
+    brands_subtitle_shadow_blur: int = 5
+    brands_subtitle_shadow_opacity: int = 50
     # Fonts
     heading_font: str = "Outfit"
     body_font: str = "Manrope"
@@ -214,6 +233,22 @@ class SiteSettingsUpdate(BaseModel):
     banner_shadow_x: Optional[int] = None
     banner_shadow_y: Optional[int] = None
     banner_shadow_opacity: Optional[int] = None
+    banner_subtitle_bold: Optional[bool] = None
+    banner_subtitle_shadow_enabled: Optional[bool] = None
+    banner_subtitle_shadow_color: Optional[str] = None
+    banner_subtitle_shadow_blur: Optional[int] = None
+    banner_subtitle_shadow_opacity: Optional[int] = None
+    menu_bold: Optional[bool] = None
+    menu_shadow_enabled: Optional[bool] = None
+    menu_shadow_color: Optional[str] = None
+    menu_shadow_blur: Optional[int] = None
+    menu_shadow_opacity: Optional[int] = None
+    menu_burger_color: Optional[str] = None
+    brands_subtitle_bold: Optional[bool] = None
+    brands_subtitle_shadow_enabled: Optional[bool] = None
+    brands_subtitle_shadow_color: Optional[str] = None
+    brands_subtitle_shadow_blur: Optional[int] = None
+    brands_subtitle_shadow_opacity: Optional[int] = None
     heading_font: Optional[str] = None
     body_font: Optional[str] = None
     heading_size: Optional[str] = None
