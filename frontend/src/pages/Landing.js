@@ -24,7 +24,26 @@ export default function Landing() {
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
-    body_size: 'normal'
+    body_size: 'normal',
+    brands_title_tr: 'Güvenilir Markalar',
+    brands_title_en: 'Trusted Brands',
+    brands_subtitle_tr: 'Dünya liderlerinden IT ekipmanları',
+    brands_subtitle_en: 'IT equipment from world leaders',
+    product1_title: 'Laptops',
+    product1_desc_tr: 'Profesyoneller için yüksek performanslı laptoplar',
+    product1_desc_en: 'High-performance laptops for professionals',
+    product2_title: 'Gaming Desk',
+    product2_desc_tr: 'Oyuncular için ergonomik gaming masaları',
+    product2_desc_en: 'Ergonomic gaming desks for gamers',
+    product3_title: 'Monitor Arms',
+    product3_desc_tr: 'Ayarlanabilir monitör kolları ve standlar',
+    product3_desc_en: 'Adjustable monitor arms and stands',
+    menu_products_tr: 'Ürünler',
+    menu_products_en: 'Products',
+    menu_brands_tr: 'Markalar',
+    menu_brands_en: 'Brands',
+    menu_contact_tr: 'İletişim',
+    menu_contact_en: 'Contact'
   });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -134,13 +153,13 @@ export default function Landing() {
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
               <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-products">
-                {t('nav_products')}
+                {language === 'tr' ? settings.menu_products_tr : settings.menu_products_en}
               </button>
               <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-brands">
-                {t('nav_brands')}
+                {language === 'tr' ? settings.menu_brands_tr : settings.menu_brands_en}
               </button>
               <button onClick={() => scrollToSection('contact')} className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-contact">
-                {t('nav_contact')}
+                {language === 'tr' ? settings.menu_contact_tr : settings.menu_contact_en}
               </button>
               <Link to="/admin" className="hover:opacity-100 transition-colors" style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="nav-admin">
                 {t('nav_admin')}
@@ -184,9 +203,9 @@ export default function Landing() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 py-4" style={{ backgroundColor: settings.background_color }} data-testid="mobile-menu">
             <nav className="flex flex-col gap-4 px-6">
-              <button onClick={() => scrollToSection('products')} className="text-left py-2" style={{ color: settings.text_color }}>{t('nav_products')}</button>
-              <button onClick={() => scrollToSection('brands')} className="text-left py-2" style={{ color: settings.text_color }}>{t('nav_brands')}</button>
-              <button onClick={() => scrollToSection('contact')} className="text-left py-2" style={{ color: settings.text_color }}>{t('nav_contact')}</button>
+              <button onClick={() => scrollToSection('products')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_products_tr : settings.menu_products_en}</button>
+              <button onClick={() => scrollToSection('brands')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_brands_tr : settings.menu_brands_en}</button>
+              <button onClick={() => scrollToSection('contact')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_contact_tr : settings.menu_contact_en}</button>
               <Link to="/admin" className="py-2" style={{ color: settings.text_color }}>{t('nav_admin')}</Link>
             </nav>
           </div>
@@ -278,27 +297,27 @@ export default function Landing() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Laptop style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>Laptops</h3>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.product1_title}</h3>
               <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
-                {language === 'tr' ? 'Profesyoneller için yüksek performanslı laptoplar' : 'High-performance laptops for professionals'}
+                {language === 'tr' ? settings.product1_desc_tr : settings.product1_desc_en}
               </p>
             </div>
             <div className="rounded-2xl p-8 text-center hover:scale-105 transition-transform border border-white/10" style={{ backgroundColor: settings.surface_color }} data-testid="product-gaming">
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Gamepad2 style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>Gaming Desk</h3>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.product2_title}</h3>
               <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
-                {language === 'tr' ? 'Oyuncular için ergonomik gaming masaları' : 'Ergonomic gaming desks for gamers'}
+                {language === 'tr' ? settings.product2_desc_tr : settings.product2_desc_en}
               </p>
             </div>
             <div className="rounded-2xl p-8 text-center hover:scale-105 transition-transform border border-white/10" style={{ backgroundColor: settings.surface_color }} data-testid="product-monitors">
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Monitor style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>Monitor Arms</h3>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.product3_title}</h3>
               <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
-                {language === 'tr' ? 'Ayarlanabilir monitör kolları ve standlar' : 'Adjustable monitor arms and stands'}
+                {language === 'tr' ? settings.product3_desc_tr : settings.product3_desc_en}
               </p>
             </div>
           </div>
@@ -309,9 +328,11 @@ export default function Landing() {
       <section id="brands" className="py-20 md:py-32 border-y border-white/5" data-testid="brands-section" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center">
           <h2 className={`${getHeadingSize('h2')} font-semibold tracking-tight mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="brands-title">
-            {t('brands_title')}
+            {language === 'tr' ? settings.brands_title_tr : settings.brands_title_en}
           </h2>
-          <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="brands-subtitle">{t('brands_subtitle')}</p>
+          <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="brands-subtitle">
+            {language === 'tr' ? settings.brands_subtitle_tr : settings.brands_subtitle_en}
+          </p>
         </div>
         
         {brands.length > 0 && (
@@ -360,15 +381,6 @@ export default function Landing() {
                   <div>
                     <h4 className="font-medium mb-1" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{t('footer_phone')}</h4>
                     <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>+90 212 XXX XX XX</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${settings.primary_color}33` }}>
-                    <Mail style={{ color: settings.primary_color }} size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{t('footer_email')}</h4>
-                    <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>info@atera.com.tr</p>
                   </div>
                 </div>
               </div>

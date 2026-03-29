@@ -32,9 +32,29 @@ export default function AdminDashboard() {
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
-    body_size: 'normal'
+    body_size: 'normal',
+    brands_title_tr: 'Güvenilir Markalar',
+    brands_title_en: 'Trusted Brands',
+    brands_subtitle_tr: 'Dünya liderlerinden IT ekipmanları',
+    brands_subtitle_en: 'IT equipment from world leaders',
+    product1_title: 'Laptops',
+    product1_desc_tr: 'Profesyoneller için yüksek performanslı laptoplar',
+    product1_desc_en: 'High-performance laptops for professionals',
+    product2_title: 'Gaming Desk',
+    product2_desc_tr: 'Oyuncular için ergonomik gaming masaları',
+    product2_desc_en: 'Ergonomic gaming desks for gamers',
+    product3_title: 'Monitor Arms',
+    product3_desc_tr: 'Ayarlanabilir monitör kolları ve standlar',
+    product3_desc_en: 'Adjustable monitor arms and stands',
+    menu_products_tr: 'Ürünler',
+    menu_products_en: 'Products',
+    menu_brands_tr: 'Markalar',
+    menu_brands_en: 'Brands',
+    menu_contact_tr: 'İletişim',
+    menu_contact_en: 'Contact'
   });
   const [savingSettings, setSavingSettings] = useState(false);
+  const [activeSettingsTab, setActiveSettingsTab] = useState('colors');
 
   const fontOptions = [
     { value: 'Outfit', label: 'Outfit' },
@@ -430,276 +450,257 @@ export default function AdminDashboard() {
           <TabsContent value="settings" data-testid="settings-content">
             <h2 className="text-2xl font-semibold text-white mb-6">Site Ayarları</h2>
             
+            {/* Settings Sub-tabs */}
+            <div className="flex gap-2 mb-6">
+              <Button 
+                variant={activeSettingsTab === 'colors' ? 'default' : 'ghost'}
+                onClick={() => setActiveSettingsTab('colors')}
+                className={activeSettingsTab === 'colors' ? 'bg-[#007AFF]' : ''}
+              >
+                Renkler
+              </Button>
+              <Button 
+                variant={activeSettingsTab === 'fonts' ? 'default' : 'ghost'}
+                onClick={() => setActiveSettingsTab('fonts')}
+                className={activeSettingsTab === 'fonts' ? 'bg-[#007AFF]' : ''}
+              >
+                Fontlar
+              </Button>
+              <Button 
+                variant={activeSettingsTab === 'menu' ? 'default' : 'ghost'}
+                onClick={() => setActiveSettingsTab('menu')}
+                className={activeSettingsTab === 'menu' ? 'bg-[#007AFF]' : ''}
+              >
+                Menü
+              </Button>
+              <Button 
+                variant={activeSettingsTab === 'products' ? 'default' : 'ghost'}
+                onClick={() => setActiveSettingsTab('products')}
+                className={activeSettingsTab === 'products' ? 'bg-[#007AFF]' : ''}
+              >
+                Ürünler
+              </Button>
+              <Button 
+                variant={activeSettingsTab === 'brands' ? 'default' : 'ghost'}
+                onClick={() => setActiveSettingsTab('brands')}
+                className={activeSettingsTab === 'brands' ? 'bg-[#007AFF]' : ''}
+              >
+                Markalar Bölümü
+              </Button>
+            </div>
+            
             <div className="surface-card rounded-2xl p-8 max-w-3xl">
-              <div className="space-y-8">
-                {/* Colors Section */}
-                <div>
-                  <h3 className="text-lg font-medium text-white mb-4 flex items-center gap-2">
-                    <Palette size={20} /> Renkler
-                  </h3>
+              <div className="space-y-6">
+                
+                {/* Colors */}
+                {activeSettingsTab === 'colors' && (
                   <div className="grid grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm text-[#A1A1AA] mb-2">Arka Plan Rengi</label>
                       <div className="flex items-center gap-3">
-                        <input
-                          type="color"
-                          value={settings.background_color}
-                          onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
-                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                          data-testid="color-background"
-                        />
-                        <Input
-                          value={settings.background_color}
-                          onChange={(e) => setSettings({ ...settings, background_color: e.target.value })}
-                          className="dark-input flex-1"
-                          data-testid="color-background-input"
-                        />
+                        <input type="color" value={settings.background_color} onChange={(e) => setSettings({ ...settings, background_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.background_color} onChange={(e) => setSettings({ ...settings, background_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
-                    
                     <div>
-                      <label className="block text-sm text-[#A1A1AA] mb-2">Kart/Yüzey Rengi</label>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Kart Rengi</label>
                       <div className="flex items-center gap-3">
-                        <input
-                          type="color"
-                          value={settings.surface_color}
-                          onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
-                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                          data-testid="color-surface"
-                        />
-                        <Input
-                          value={settings.surface_color}
-                          onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })}
-                          className="dark-input flex-1"
-                          data-testid="color-surface-input"
-                        />
+                        <input type="color" value={settings.surface_color} onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.surface_color} onChange={(e) => setSettings({ ...settings, surface_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
-                    
                     <div>
-                      <label className="block text-sm text-[#A1A1AA] mb-2">Ana Renk (Butonlar)</label>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">Ana Renk</label>
                       <div className="flex items-center gap-3">
-                        <input
-                          type="color"
-                          value={settings.primary_color}
-                          onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
-                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                          data-testid="color-primary"
-                        />
-                        <Input
-                          value={settings.primary_color}
-                          onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
-                          className="dark-input flex-1"
-                          data-testid="color-primary-input"
-                        />
+                        <input type="color" value={settings.primary_color} onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.primary_color} onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
-                    
                     <div>
                       <label className="block text-sm text-[#A1A1AA] mb-2">Yazı Rengi</label>
                       <div className="flex items-center gap-3">
-                        <input
-                          type="color"
-                          value={settings.text_color}
-                          onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
-                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                          data-testid="color-text"
-                        />
-                        <Input
-                          value={settings.text_color}
-                          onChange={(e) => setSettings({ ...settings, text_color: e.target.value })}
-                          className="dark-input flex-1"
-                          data-testid="color-text-input"
-                        />
+                        <input type="color" value={settings.text_color} onChange={(e) => setSettings({ ...settings, text_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.text_color} onChange={(e) => setSettings({ ...settings, text_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
-                    
                     <div>
                       <label className="block text-sm text-[#A1A1AA] mb-2">İkincil Yazı Rengi</label>
                       <div className="flex items-center gap-3">
-                        <input
-                          type="color"
-                          value={settings.text_secondary_color}
-                          onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
-                          className="w-12 h-12 rounded-lg cursor-pointer border-0"
-                          data-testid="color-text-secondary"
-                        />
-                        <Input
-                          value={settings.text_secondary_color}
-                          onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })}
-                          className="dark-input flex-1"
-                          data-testid="color-text-secondary-input"
-                        />
+                        <input type="color" value={settings.text_secondary_color} onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.text_secondary_color} onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                {/* Fonts Section */}
-                <div className="pt-6 border-t border-white/10">
-                  <h3 className="text-lg font-medium text-white mb-4 flex items-center gap-2">
-                    <span className="text-xl">Aa</span> Fontlar
-                  </h3>
+                {/* Fonts */}
+                {activeSettingsTab === 'fonts' && (
                   <div className="grid grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm text-[#A1A1AA] mb-2">Başlık Fontu</label>
-                      <Select 
-                        value={settings.heading_font} 
-                        onValueChange={(value) => setSettings({ ...settings, heading_font: value })}
-                      >
-                        <SelectTrigger className="dark-input" data-testid="font-heading-select">
-                          <SelectValue placeholder="Font seçin" />
-                        </SelectTrigger>
+                      <Select value={settings.heading_font} onValueChange={(value) => setSettings({ ...settings, heading_font: value })}>
+                        <SelectTrigger className="dark-input"><SelectValue /></SelectTrigger>
                         <SelectContent className="bg-[#141414] border-white/10">
-                          {fontOptions.map((font) => (
-                            <SelectItem 
-                              key={font.value} 
-                              value={font.value}
-                              className="text-white hover:bg-white/10"
-                              style={{ fontFamily: font.value }}
-                            >
-                              {font.label}
-                            </SelectItem>
-                          ))}
+                          {fontOptions.map((font) => (<SelectItem key={font.value} value={font.value} className="text-white hover:bg-white/10">{font.label}</SelectItem>))}
                         </SelectContent>
                       </Select>
                     </div>
-                    
                     <div>
                       <label className="block text-sm text-[#A1A1AA] mb-2">Başlık Boyutu</label>
-                      <Select 
-                        value={settings.heading_size} 
-                        onValueChange={(value) => setSettings({ ...settings, heading_size: value })}
-                      >
-                        <SelectTrigger className="dark-input" data-testid="size-heading-select">
-                          <SelectValue placeholder="Boyut seçin" />
-                        </SelectTrigger>
+                      <Select value={settings.heading_size} onValueChange={(value) => setSettings({ ...settings, heading_size: value })}>
+                        <SelectTrigger className="dark-input"><SelectValue /></SelectTrigger>
                         <SelectContent className="bg-[#141414] border-white/10">
-                          {sizeOptions.map((size) => (
-                            <SelectItem 
-                              key={size.value} 
-                              value={size.value}
-                              className="text-white hover:bg-white/10"
-                            >
-                              {size.label}
-                            </SelectItem>
-                          ))}
+                          {sizeOptions.map((size) => (<SelectItem key={size.value} value={size.value} className="text-white hover:bg-white/10">{size.label}</SelectItem>))}
                         </SelectContent>
                       </Select>
                     </div>
-                    
                     <div>
                       <label className="block text-sm text-[#A1A1AA] mb-2">Metin Fontu</label>
-                      <Select 
-                        value={settings.body_font} 
-                        onValueChange={(value) => setSettings({ ...settings, body_font: value })}
-                      >
-                        <SelectTrigger className="dark-input" data-testid="font-body-select">
-                          <SelectValue placeholder="Font seçin" />
-                        </SelectTrigger>
+                      <Select value={settings.body_font} onValueChange={(value) => setSettings({ ...settings, body_font: value })}>
+                        <SelectTrigger className="dark-input"><SelectValue /></SelectTrigger>
                         <SelectContent className="bg-[#141414] border-white/10">
-                          {fontOptions.map((font) => (
-                            <SelectItem 
-                              key={font.value} 
-                              value={font.value}
-                              className="text-white hover:bg-white/10"
-                              style={{ fontFamily: font.value }}
-                            >
-                              {font.label}
-                            </SelectItem>
-                          ))}
+                          {fontOptions.map((font) => (<SelectItem key={font.value} value={font.value} className="text-white hover:bg-white/10">{font.label}</SelectItem>))}
                         </SelectContent>
                       </Select>
                     </div>
-                    
                     <div>
                       <label className="block text-sm text-[#A1A1AA] mb-2">Metin Boyutu</label>
-                      <Select 
-                        value={settings.body_size} 
-                        onValueChange={(value) => setSettings({ ...settings, body_size: value })}
-                      >
-                        <SelectTrigger className="dark-input" data-testid="size-body-select">
-                          <SelectValue placeholder="Boyut seçin" />
-                        </SelectTrigger>
+                      <Select value={settings.body_size} onValueChange={(value) => setSettings({ ...settings, body_size: value })}>
+                        <SelectTrigger className="dark-input"><SelectValue /></SelectTrigger>
                         <SelectContent className="bg-[#141414] border-white/10">
-                          {sizeOptions.map((size) => (
-                            <SelectItem 
-                              key={size.value} 
-                              value={size.value}
-                              className="text-white hover:bg-white/10"
-                            >
-                              {size.label}
-                            </SelectItem>
-                          ))}
+                          {sizeOptions.map((size) => (<SelectItem key={size.value} value={size.value} className="text-white hover:bg-white/10">{size.label}</SelectItem>))}
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                </div>
-                
-                <div className="pt-4 border-t border-white/10">
-                  <div className="flex items-center gap-4">
-                    <Button
-                      onClick={saveSettings}
-                      disabled={savingSettings}
-                      className="bg-[#007AFF] hover:bg-[#3395FF]"
-                      data-testid="save-settings-btn"
-                    >
-                      {savingSettings ? 'Kaydediliyor...' : 'Kaydet'}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => setSettings({
-                        background_color: '#0A0A0A',
-                        surface_color: '#141414',
-                        primary_color: '#007AFF',
-                        text_color: '#FFFFFF',
-                        text_secondary_color: '#A1A1AA',
-                        heading_font: 'Outfit',
-                        body_font: 'Manrope',
-                        heading_size: 'normal',
-                        body_size: 'normal'
-                      })}
-                      data-testid="reset-settings-btn"
-                    >
-                      Varsayılana Dön
-                    </Button>
-                  </div>
-                </div>
-                
-                {/* Preview */}
-                <div className="mt-6 pt-6 border-t border-white/10">
-                  <h3 className="text-white font-medium mb-4">Önizleme</h3>
-                  <div className="rounded-xl p-6" style={{ backgroundColor: settings.background_color }}>
-                    <div className="rounded-lg p-4 mb-4" style={{ backgroundColor: settings.surface_color }}>
-                      <h4 
-                        style={{ 
-                          color: settings.text_color, 
-                          fontFamily: settings.heading_font,
-                          fontSize: settings.heading_size === 'small' ? '1.25rem' : 
-                                   settings.heading_size === 'normal' ? '1.5rem' : 
-                                   settings.heading_size === 'large' ? '1.875rem' : '2.25rem'
-                        }} 
-                        className="font-semibold mb-2"
-                      >
-                        Örnek Başlık
-                      </h4>
-                      <p 
-                        style={{ 
-                          color: settings.text_secondary_color, 
-                          fontFamily: settings.body_font,
-                          fontSize: settings.body_size === 'small' ? '0.875rem' : 
-                                   settings.body_size === 'normal' ? '1rem' : 
-                                   settings.body_size === 'large' ? '1.125rem' : '1.25rem'
-                        }}
-                      >
-                        Bu bir örnek metin paragrafıdır. Font ve boyut ayarları burada görünecek.
-                      </p>
+                )}
+
+                {/* Menu */}
+                {activeSettingsTab === 'menu' && (
+                  <div className="space-y-6">
+                    <h3 className="text-white font-medium">Menü Metinleri</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Ürünler (TR)</label>
+                        <Input value={settings.menu_products_tr} onChange={(e) => setSettings({ ...settings, menu_products_tr: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Products (EN)</label>
+                        <Input value={settings.menu_products_en} onChange={(e) => setSettings({ ...settings, menu_products_en: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Markalar (TR)</label>
+                        <Input value={settings.menu_brands_tr} onChange={(e) => setSettings({ ...settings, menu_brands_tr: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Brands (EN)</label>
+                        <Input value={settings.menu_brands_en} onChange={(e) => setSettings({ ...settings, menu_brands_en: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">İletişim (TR)</label>
+                        <Input value={settings.menu_contact_tr} onChange={(e) => setSettings({ ...settings, menu_contact_tr: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Contact (EN)</label>
+                        <Input value={settings.menu_contact_en} onChange={(e) => setSettings({ ...settings, menu_contact_en: e.target.value })} className="dark-input" />
+                      </div>
                     </div>
-                    <Button style={{ backgroundColor: settings.primary_color, color: settings.text_color }} className="rounded-lg px-6 py-2">
-                      Örnek Buton
-                    </Button>
                   </div>
+                )}
+
+                {/* Products */}
+                {activeSettingsTab === 'products' && (
+                  <div className="space-y-8">
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h4 className="text-white font-medium mb-4">Ürün 1</h4>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık</label>
+                          <Input value={settings.product1_title} onChange={(e) => setSettings({ ...settings, product1_title: e.target.value })} className="dark-input" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (TR)</label>
+                            <Input value={settings.product1_desc_tr} onChange={(e) => setSettings({ ...settings, product1_desc_tr: e.target.value })} className="dark-input" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (EN)</label>
+                            <Input value={settings.product1_desc_en} onChange={(e) => setSettings({ ...settings, product1_desc_en: e.target.value })} className="dark-input" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h4 className="text-white font-medium mb-4">Ürün 2</h4>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık</label>
+                          <Input value={settings.product2_title} onChange={(e) => setSettings({ ...settings, product2_title: e.target.value })} className="dark-input" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (TR)</label>
+                            <Input value={settings.product2_desc_tr} onChange={(e) => setSettings({ ...settings, product2_desc_tr: e.target.value })} className="dark-input" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (EN)</label>
+                            <Input value={settings.product2_desc_en} onChange={(e) => setSettings({ ...settings, product2_desc_en: e.target.value })} className="dark-input" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h4 className="text-white font-medium mb-4">Ürün 3</h4>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık</label>
+                          <Input value={settings.product3_title} onChange={(e) => setSettings({ ...settings, product3_title: e.target.value })} className="dark-input" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (TR)</label>
+                            <Input value={settings.product3_desc_tr} onChange={(e) => setSettings({ ...settings, product3_desc_tr: e.target.value })} className="dark-input" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (EN)</label>
+                            <Input value={settings.product3_desc_en} onChange={(e) => setSettings({ ...settings, product3_desc_en: e.target.value })} className="dark-input" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Brands Section */}
+                {activeSettingsTab === 'brands' && (
+                  <div className="space-y-6">
+                    <h3 className="text-white font-medium">Markalar Bölümü Metinleri</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (TR)</label>
+                        <Input value={settings.brands_title_tr} onChange={(e) => setSettings({ ...settings, brands_title_tr: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Title (EN)</label>
+                        <Input value={settings.brands_title_en} onChange={(e) => setSettings({ ...settings, brands_title_en: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Alt Başlık (TR)</label>
+                        <Input value={settings.brands_subtitle_tr} onChange={(e) => setSettings({ ...settings, brands_subtitle_tr: e.target.value })} className="dark-input" />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-[#A1A1AA] mb-2">Subtitle (EN)</label>
+                        <Input value={settings.brands_subtitle_en} onChange={(e) => setSettings({ ...settings, brands_subtitle_en: e.target.value })} className="dark-input" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Save Button */}
+                <div className="pt-6 border-t border-white/10">
+                  <Button onClick={saveSettings} disabled={savingSettings} className="bg-[#007AFF] hover:bg-[#3395FF]">
+                    {savingSettings ? 'Kaydediliyor...' : 'Kaydet'}
+                  </Button>
                 </div>
               </div>
             </div>

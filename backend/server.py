@@ -154,15 +154,39 @@ class ContactMessageCreate(BaseModel):
 
 class SiteSettings(BaseModel):
     id: str = "site_settings"
+    # Colors
     background_color: str = "#0A0A0A"
     surface_color: str = "#141414"
     primary_color: str = "#007AFF"
     text_color: str = "#FFFFFF"
     text_secondary_color: str = "#A1A1AA"
+    # Fonts
     heading_font: str = "Outfit"
     body_font: str = "Manrope"
     heading_size: str = "normal"
     body_size: str = "normal"
+    # Brands Section
+    brands_title_tr: str = "Güvenilir Markalar"
+    brands_title_en: str = "Trusted Brands"
+    brands_subtitle_tr: str = "Dünya liderlerinden IT ekipmanları"
+    brands_subtitle_en: str = "IT equipment from world leaders"
+    # Products Section
+    product1_title: str = "Laptops"
+    product1_desc_tr: str = "Profesyoneller için yüksek performanslı laptoplar"
+    product1_desc_en: str = "High-performance laptops for professionals"
+    product2_title: str = "Gaming Desk"
+    product2_desc_tr: str = "Oyuncular için ergonomik gaming masaları"
+    product2_desc_en: str = "Ergonomic gaming desks for gamers"
+    product3_title: str = "Monitor Arms"
+    product3_desc_tr: str = "Ayarlanabilir monitör kolları ve standlar"
+    product3_desc_en: str = "Adjustable monitor arms and stands"
+    # Menu
+    menu_products_tr: str = "Ürünler"
+    menu_products_en: str = "Products"
+    menu_brands_tr: str = "Markalar"
+    menu_brands_en: str = "Brands"
+    menu_contact_tr: str = "İletişim"
+    menu_contact_en: str = "Contact"
 
 class SiteSettingsUpdate(BaseModel):
     background_color: Optional[str] = None
@@ -174,6 +198,25 @@ class SiteSettingsUpdate(BaseModel):
     body_font: Optional[str] = None
     heading_size: Optional[str] = None
     body_size: Optional[str] = None
+    brands_title_tr: Optional[str] = None
+    brands_title_en: Optional[str] = None
+    brands_subtitle_tr: Optional[str] = None
+    brands_subtitle_en: Optional[str] = None
+    product1_title: Optional[str] = None
+    product1_desc_tr: Optional[str] = None
+    product1_desc_en: Optional[str] = None
+    product2_title: Optional[str] = None
+    product2_desc_tr: Optional[str] = None
+    product2_desc_en: Optional[str] = None
+    product3_title: Optional[str] = None
+    product3_desc_tr: Optional[str] = None
+    product3_desc_en: Optional[str] = None
+    menu_products_tr: Optional[str] = None
+    menu_products_en: Optional[str] = None
+    menu_brands_tr: Optional[str] = None
+    menu_brands_en: Optional[str] = None
+    menu_contact_tr: Optional[str] = None
+    menu_contact_en: Optional[str] = None
 
 # Auth Endpoints
 @auth_router.post("/login")
