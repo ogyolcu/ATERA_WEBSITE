@@ -24,6 +24,12 @@ export default function Landing() {
     text_secondary_color: '#A1A1AA',
     logo_url: '',
     logo_text: 'ATERA',
+    banner_shadow_enabled: true,
+    banner_shadow_color: '#000000',
+    banner_shadow_blur: 10,
+    banner_shadow_x: 2,
+    banner_shadow_y: 2,
+    banner_shadow_opacity: 50,
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -131,6 +137,15 @@ export default function Landing() {
     return sizes[settings.body_size] || 'text-lg sm:text-xl';
   };
 
+  const getBannerTextShadow = () => {
+    if (!settings.banner_shadow_enabled) return 'none';
+    const r = parseInt(settings.banner_shadow_color.slice(1, 3), 16);
+    const g = parseInt(settings.banner_shadow_color.slice(3, 5), 16);
+    const b = parseInt(settings.banner_shadow_color.slice(5, 7), 16);
+    const opacity = settings.banner_shadow_opacity / 100;
+    return `${settings.banner_shadow_x}px ${settings.banner_shadow_y}px ${settings.banner_shadow_blur}px rgba(${r},${g},${b},${opacity})`;
+  };
+
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
@@ -236,10 +251,10 @@ export default function Landing() {
         {banners.length > 0 && (
           <div className="hero-content max-w-7xl mx-auto">
             <div className="animate-slideUp">
-              <h1 className={`${getHeadingSize('h1')} font-bold tracking-tighter mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="hero-title">
+              <h1 className={`${getHeadingSize('h1')} font-bold tracking-tighter mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font, textShadow: getBannerTextShadow() }} data-testid="hero-title">
                 {language === 'tr' ? banners[currentSlide]?.title_tr : banners[currentSlide]?.title_en}
               </h1>
-              <p className={`${getSubtitleSize()} mb-8 max-w-2xl`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }} data-testid="hero-subtitle">
+              <p className={`${getSubtitleSize()} mb-8 max-w-2xl`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, textShadow: getBannerTextShadow() }} data-testid="hero-subtitle">
                 {language === 'tr' ? banners[currentSlide]?.subtitle_tr : banners[currentSlide]?.subtitle_en}
               </p>
               <div className="flex flex-wrap gap-4">

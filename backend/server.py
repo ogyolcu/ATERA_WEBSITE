@@ -164,6 +164,13 @@ class SiteSettings(BaseModel):
     # Logo
     logo_url: str = ""
     logo_text: str = "ATERA"
+    # Banner Text Shadow
+    banner_shadow_enabled: bool = True
+    banner_shadow_color: str = "#000000"
+    banner_shadow_blur: int = 10
+    banner_shadow_x: int = 2
+    banner_shadow_y: int = 2
+    banner_shadow_opacity: int = 50
     # Fonts
     heading_font: str = "Outfit"
     body_font: str = "Manrope"
@@ -201,6 +208,12 @@ class SiteSettingsUpdate(BaseModel):
     text_secondary_color: Optional[str] = None
     logo_url: Optional[str] = None
     logo_text: Optional[str] = None
+    banner_shadow_enabled: Optional[bool] = None
+    banner_shadow_color: Optional[str] = None
+    banner_shadow_blur: Optional[int] = None
+    banner_shadow_x: Optional[int] = None
+    banner_shadow_y: Optional[int] = None
+    banner_shadow_opacity: Optional[int] = None
     heading_font: Optional[str] = None
     body_font: Optional[str] = None
     heading_size: Optional[str] = None

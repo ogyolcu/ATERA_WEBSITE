@@ -32,6 +32,12 @@ export default function AdminDashboard() {
     text_secondary_color: '#A1A1AA',
     logo_url: '',
     logo_text: 'ATERA',
+    banner_shadow_enabled: true,
+    banner_shadow_color: '#000000',
+    banner_shadow_blur: 10,
+    banner_shadow_x: 2,
+    banner_shadow_y: 2,
+    banner_shadow_opacity: 50,
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -497,6 +503,13 @@ export default function AdminDashboard() {
               >
                 Markalar Bölümü
               </Button>
+              <Button 
+                variant={activeSettingsTab === 'shadow' ? 'default' : 'ghost'}
+                onClick={() => setActiveSettingsTab('shadow')}
+                className={activeSettingsTab === 'shadow' ? 'bg-[#007AFF]' : ''}
+              >
+                Text Shadow
+              </Button>
             </div>
             
             <div className="surface-card rounded-2xl p-8 max-w-3xl">
@@ -738,6 +751,115 @@ export default function AdminDashboard() {
                         <label className="block text-sm text-[#A1A1AA] mb-2">Subtitle (EN)</label>
                         <Input value={settings.brands_subtitle_en} onChange={(e) => setSettings({ ...settings, brands_subtitle_en: e.target.value })} className="dark-input" />
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Text Shadow */}
+                {activeSettingsTab === 'shadow' && (
+                  <div className="space-y-6">
+                    <h3 className="text-white font-medium">Banner Text Shadow Ayarları</h3>
+                    
+                    <div className="flex items-center gap-3">
+                      <Switch
+                        checked={settings.banner_shadow_enabled}
+                        onCheckedChange={(checked) => setSettings({ ...settings, banner_shadow_enabled: checked })}
+                      />
+                      <label className="text-white">Shadow Aktif</label>
+                    </div>
+                    
+                    {settings.banner_shadow_enabled && (
+                      <div className="grid grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Shadow Rengi</label>
+                          <div className="flex items-center gap-3">
+                            <input 
+                              type="color" 
+                              value={settings.banner_shadow_color} 
+                              onChange={(e) => setSettings({ ...settings, banner_shadow_color: e.target.value })} 
+                              className="w-12 h-12 rounded-lg cursor-pointer border-0" 
+                            />
+                            <Input 
+                              value={settings.banner_shadow_color} 
+                              onChange={(e) => setSettings({ ...settings, banner_shadow_color: e.target.value })} 
+                              className="dark-input flex-1" 
+                            />
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.banner_shadow_opacity}%</label>
+                          <input 
+                            type="range" 
+                            min="0" 
+                            max="100" 
+                            value={settings.banner_shadow_opacity} 
+                            onChange={(e) => setSettings({ ...settings, banner_shadow_opacity: parseInt(e.target.value) })}
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Bulanıklık (Blur): {settings.banner_shadow_blur}px</label>
+                          <input 
+                            type="range" 
+                            min="0" 
+                            max="20" 
+                            value={settings.banner_shadow_blur} 
+                            onChange={(e) => setSettings({ ...settings, banner_shadow_blur: parseInt(e.target.value) })}
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Mesafe X: {settings.banner_shadow_x}px</label>
+                          <input 
+                            type="range" 
+                            min="0" 
+                            max="10" 
+                            value={settings.banner_shadow_x} 
+                            onChange={(e) => setSettings({ ...settings, banner_shadow_x: parseInt(e.target.value) })}
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Mesafe Y: {settings.banner_shadow_y}px</label>
+                          <input 
+                            type="range" 
+                            min="0" 
+                            max="10" 
+                            value={settings.banner_shadow_y} 
+                            onChange={(e) => setSettings({ ...settings, banner_shadow_y: parseInt(e.target.value) })}
+                            className="w-full"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Preview */}
+                    <div className="p-6 bg-black/30 rounded-xl mt-4">
+                      <label className="block text-sm text-[#A1A1AA] mb-4">Önizleme</label>
+                      <h2 
+                        className="text-3xl font-bold text-white"
+                        style={{
+                          textShadow: settings.banner_shadow_enabled 
+                            ? `${settings.banner_shadow_x}px ${settings.banner_shadow_y}px ${settings.banner_shadow_blur}px rgba(${parseInt(settings.banner_shadow_color.slice(1,3),16)},${parseInt(settings.banner_shadow_color.slice(3,5),16)},${parseInt(settings.banner_shadow_color.slice(5,7),16)},${settings.banner_shadow_opacity/100})`
+                            : 'none'
+                        }}
+                      >
+                        Örnek Banner Başlık
+                      </h2>
+                      <p 
+                        className="text-lg text-gray-300 mt-2"
+                        style={{
+                          textShadow: settings.banner_shadow_enabled 
+                            ? `${settings.banner_shadow_x}px ${settings.banner_shadow_y}px ${settings.banner_shadow_blur}px rgba(${parseInt(settings.banner_shadow_color.slice(1,3),16)},${parseInt(settings.banner_shadow_color.slice(3,5),16)},${parseInt(settings.banner_shadow_color.slice(5,7),16)},${settings.banner_shadow_opacity/100})`
+                            : 'none'
+                        }}
+                      >
+                        Örnek alt başlık metni
+                      </p>
                     </div>
                   </div>
                 )}
