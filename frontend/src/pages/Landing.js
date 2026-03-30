@@ -599,7 +599,7 @@ export default function Landing() {
               <span className="text-xl font-bold" style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.logo_text}</span>
             )}
           </div>
-          <p className={`${getBodySize()} text-sm`} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
+          <p className={`${getBodySize()} text-sm`} style={{ color: '#8f8f8f', fontFamily: settings.body_font }}>
             © {new Date().getFullYear()} Atera. {t('footer_rights')}
           </p>
         </div>
