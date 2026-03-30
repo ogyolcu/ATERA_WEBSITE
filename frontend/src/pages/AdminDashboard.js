@@ -55,6 +55,15 @@ export default function AdminDashboard() {
     brands_subtitle_shadow_color: '#000000',
     brands_subtitle_shadow_blur: 5,
     brands_subtitle_shadow_opacity: 50,
+    brands_title_color: '#FFFFFF',
+    brands_title_size: 'normal',
+    brands_title_bold: false,
+    brands_title_shadow_enabled: false,
+    brands_title_shadow_color: '#000000',
+    brands_title_shadow_blur: 5,
+    brands_title_shadow_opacity: 50,
+    brands_subtitle_color: '#A1A1AA',
+    brands_subtitle_size: 'normal',
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -765,24 +774,122 @@ export default function AdminDashboard() {
                 {/* Brands Section */}
                 {activeSettingsTab === 'brands' && (
                   <div className="space-y-6">
-                    <h3 className="text-white font-medium">Markalar Bölümü Metinleri</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (TR)</label>
-                        <Input value={settings.brands_title_tr} onChange={(e) => setSettings({ ...settings, brands_title_tr: e.target.value })} className="dark-input" />
+                    {/* Brands Title Settings */}
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h3 className="text-white font-medium mb-4">Markalar Başlığı ("Güvenilir Markalar")</h3>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (TR)</label>
+                          <Input value={settings.brands_title_tr} onChange={(e) => setSettings({ ...settings, brands_title_tr: e.target.value })} className="dark-input" data-testid="brands-title-tr-input" />
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Title (EN)</label>
+                          <Input value={settings.brands_title_en} onChange={(e) => setSettings({ ...settings, brands_title_en: e.target.value })} className="dark-input" data-testid="brands-title-en-input" />
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-sm text-[#A1A1AA] mb-2">Title (EN)</label>
-                        <Input value={settings.brands_title_en} onChange={(e) => setSettings({ ...settings, brands_title_en: e.target.value })} className="dark-input" />
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Renk</label>
+                          <div className="flex items-center gap-2">
+                            <input type="color" value={settings.brands_title_color} onChange={(e) => setSettings({ ...settings, brands_title_color: e.target.value })} className="w-10 h-10 rounded cursor-pointer border-0" />
+                            <Input value={settings.brands_title_color} onChange={(e) => setSettings({ ...settings, brands_title_color: e.target.value })} className="dark-input flex-1" />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Font Boyutu</label>
+                          <select value={settings.brands_title_size} onChange={(e) => setSettings({ ...settings, brands_title_size: e.target.value })} className="w-full h-10 rounded-lg bg-[#0A0A0A] border border-white/10 text-white px-3">
+                            <option value="small">Küçük</option>
+                            <option value="normal">Normal</option>
+                            <option value="large">Büyük</option>
+                            <option value="xlarge">Çok Büyük</option>
+                          </select>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-sm text-[#A1A1AA] mb-2">Alt Başlık (TR)</label>
-                        <Input value={settings.brands_subtitle_tr} onChange={(e) => setSettings({ ...settings, brands_subtitle_tr: e.target.value })} className="dark-input" />
+                      <div className="flex items-center gap-6 mb-4">
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.brands_title_bold} onCheckedChange={(checked) => setSettings({ ...settings, brands_title_bold: checked })} />
+                          <label className="text-white">Bold</label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.brands_title_shadow_enabled} onCheckedChange={(checked) => setSettings({ ...settings, brands_title_shadow_enabled: checked })} />
+                          <label className="text-white">Shadow</label>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-sm text-[#A1A1AA] mb-2">Subtitle (EN)</label>
-                        <Input value={settings.brands_subtitle_en} onChange={(e) => setSettings({ ...settings, brands_subtitle_en: e.target.value })} className="dark-input" />
+                      {settings.brands_title_shadow_enabled && (
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Shadow Renk</label>
+                            <input type="color" value={settings.brands_title_shadow_color} onChange={(e) => setSettings({ ...settings, brands_title_shadow_color: e.target.value })} className="w-full h-10 rounded cursor-pointer border-0" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Blur: {settings.brands_title_shadow_blur}px</label>
+                            <input type="range" min="0" max="20" value={settings.brands_title_shadow_blur} onChange={(e) => setSettings({ ...settings, brands_title_shadow_blur: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.brands_title_shadow_opacity}%</label>
+                            <input type="range" min="0" max="100" value={settings.brands_title_shadow_opacity} onChange={(e) => setSettings({ ...settings, brands_title_shadow_opacity: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Brands Subtitle Settings */}
+                    <div className="p-4 border border-white/10 rounded-xl">
+                      <h3 className="text-white font-medium mb-4">Markalar Alt Başlığı ("Dünya liderlerinden...")</h3>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Alt Başlık (TR)</label>
+                          <Input value={settings.brands_subtitle_tr} onChange={(e) => setSettings({ ...settings, brands_subtitle_tr: e.target.value })} className="dark-input" data-testid="brands-subtitle-tr-input" />
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Subtitle (EN)</label>
+                          <Input value={settings.brands_subtitle_en} onChange={(e) => setSettings({ ...settings, brands_subtitle_en: e.target.value })} className="dark-input" data-testid="brands-subtitle-en-input" />
+                        </div>
                       </div>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Renk</label>
+                          <div className="flex items-center gap-2">
+                            <input type="color" value={settings.brands_subtitle_color} onChange={(e) => setSettings({ ...settings, brands_subtitle_color: e.target.value })} className="w-10 h-10 rounded cursor-pointer border-0" />
+                            <Input value={settings.brands_subtitle_color} onChange={(e) => setSettings({ ...settings, brands_subtitle_color: e.target.value })} className="dark-input flex-1" />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Font Boyutu</label>
+                          <select value={settings.brands_subtitle_size} onChange={(e) => setSettings({ ...settings, brands_subtitle_size: e.target.value })} className="w-full h-10 rounded-lg bg-[#0A0A0A] border border-white/10 text-white px-3">
+                            <option value="small">Küçük</option>
+                            <option value="normal">Normal</option>
+                            <option value="large">Büyük</option>
+                            <option value="xlarge">Çok Büyük</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-6 mb-4">
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.brands_subtitle_bold} onCheckedChange={(checked) => setSettings({ ...settings, brands_subtitle_bold: checked })} />
+                          <label className="text-white">Bold</label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Switch checked={settings.brands_subtitle_shadow_enabled} onCheckedChange={(checked) => setSettings({ ...settings, brands_subtitle_shadow_enabled: checked })} />
+                          <label className="text-white">Shadow</label>
+                        </div>
+                      </div>
+                      {settings.brands_subtitle_shadow_enabled && (
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Shadow Renk</label>
+                            <input type="color" value={settings.brands_subtitle_shadow_color} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_color: e.target.value })} className="w-full h-10 rounded cursor-pointer border-0" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Blur: {settings.brands_subtitle_shadow_blur}px</label>
+                            <input type="range" min="0" max="20" value={settings.brands_subtitle_shadow_blur} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_blur: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.brands_subtitle_shadow_opacity}%</label>
+                            <input type="range" min="0" max="100" value={settings.brands_subtitle_shadow_opacity} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_opacity: parseInt(e.target.value) })} className="w-full" />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -892,37 +999,6 @@ export default function AdminDashboard() {
                           <Input value={settings.menu_burger_color} onChange={(e) => setSettings({ ...settings, menu_burger_color: e.target.value })} className="dark-input w-32" />
                         </div>
                       </div>
-                    </div>
-
-                    {/* Brands Subtitle Shadow & Bold */}
-                    <div className="p-4 border border-white/10 rounded-xl">
-                      <h3 className="text-white font-medium mb-4">Markalar Alt Yazı ("Dünya Liderlerinden...")</h3>
-                      <div className="flex items-center gap-6 mb-4">
-                        <div className="flex items-center gap-2">
-                          <Switch checked={settings.brands_subtitle_bold} onCheckedChange={(checked) => setSettings({ ...settings, brands_subtitle_bold: checked })} />
-                          <label className="text-white">Bold</label>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Switch checked={settings.brands_subtitle_shadow_enabled} onCheckedChange={(checked) => setSettings({ ...settings, brands_subtitle_shadow_enabled: checked })} />
-                          <label className="text-white">Shadow</label>
-                        </div>
-                      </div>
-                      {settings.brands_subtitle_shadow_enabled && (
-                        <div className="grid grid-cols-3 gap-4">
-                          <div>
-                            <label className="block text-sm text-[#A1A1AA] mb-2">Renk</label>
-                            <input type="color" value={settings.brands_subtitle_shadow_color} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_color: e.target.value })} className="w-full h-10 rounded cursor-pointer border-0" />
-                          </div>
-                          <div>
-                            <label className="block text-sm text-[#A1A1AA] mb-2">Blur: {settings.brands_subtitle_shadow_blur}px</label>
-                            <input type="range" min="0" max="20" value={settings.brands_subtitle_shadow_blur} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_blur: parseInt(e.target.value) })} className="w-full" />
-                          </div>
-                          <div>
-                            <label className="block text-sm text-[#A1A1AA] mb-2">Opaklık: {settings.brands_subtitle_shadow_opacity}%</label>
-                            <input type="range" min="0" max="100" value={settings.brands_subtitle_shadow_opacity} onChange={(e) => setSettings({ ...settings, brands_subtitle_shadow_opacity: parseInt(e.target.value) })} className="w-full" />
-                          </div>
-                        </div>
-                      )}
                     </div>
 
                     {/* Contact Section Settings */}

@@ -191,6 +191,17 @@ class SiteSettings(BaseModel):
     brands_subtitle_shadow_color: str = "#000000"
     brands_subtitle_shadow_blur: int = 5
     brands_subtitle_shadow_opacity: int = 50
+    # Brands Title Style
+    brands_title_color: str = "#FFFFFF"
+    brands_title_size: str = "normal"
+    brands_title_bold: bool = False
+    brands_title_shadow_enabled: bool = False
+    brands_title_shadow_color: str = "#000000"
+    brands_title_shadow_blur: int = 5
+    brands_title_shadow_opacity: int = 50
+    # Brands Subtitle Extra
+    brands_subtitle_color: str = "#A1A1AA"
+    brands_subtitle_size: str = "normal"
     # Fonts
     heading_font: str = "Outfit"
     body_font: str = "Manrope"
@@ -260,6 +271,15 @@ class SiteSettingsUpdate(BaseModel):
     brands_subtitle_shadow_color: Optional[str] = None
     brands_subtitle_shadow_blur: Optional[int] = None
     brands_subtitle_shadow_opacity: Optional[int] = None
+    brands_title_color: Optional[str] = None
+    brands_title_size: Optional[str] = None
+    brands_title_bold: Optional[bool] = None
+    brands_title_shadow_enabled: Optional[bool] = None
+    brands_title_shadow_color: Optional[str] = None
+    brands_title_shadow_blur: Optional[int] = None
+    brands_title_shadow_opacity: Optional[int] = None
+    brands_subtitle_color: Optional[str] = None
+    brands_subtitle_size: Optional[str] = None
     heading_font: Optional[str] = None
     body_font: Optional[str] = None
     heading_size: Optional[str] = None

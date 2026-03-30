@@ -47,6 +47,15 @@ export default function Landing() {
     brands_subtitle_shadow_color: '#000000',
     brands_subtitle_shadow_blur: 5,
     brands_subtitle_shadow_opacity: 50,
+    brands_title_color: '#FFFFFF',
+    brands_title_size: 'normal',
+    brands_title_bold: false,
+    brands_title_shadow_enabled: false,
+    brands_title_shadow_color: '#000000',
+    brands_title_shadow_blur: 5,
+    brands_title_shadow_opacity: 50,
+    brands_subtitle_color: '#A1A1AA',
+    brands_subtitle_size: 'normal',
     heading_font: 'Outfit',
     body_font: 'Manrope',
     heading_size: 'normal',
@@ -196,6 +205,35 @@ export default function Landing() {
     const b = parseInt(settings.brands_subtitle_shadow_color.slice(5, 7), 16);
     const opacity = settings.brands_subtitle_shadow_opacity / 100;
     return `0px 0px ${settings.brands_subtitle_shadow_blur}px rgba(${r},${g},${b},${opacity})`;
+  };
+
+  const getBrandsTitleShadow = () => {
+    if (!settings.brands_title_shadow_enabled) return 'none';
+    const r = parseInt(settings.brands_title_shadow_color.slice(1, 3), 16);
+    const g = parseInt(settings.brands_title_shadow_color.slice(3, 5), 16);
+    const b = parseInt(settings.brands_title_shadow_color.slice(5, 7), 16);
+    const opacity = settings.brands_title_shadow_opacity / 100;
+    return `0px 0px ${settings.brands_title_shadow_blur}px rgba(${r},${g},${b},${opacity})`;
+  };
+
+  const getBrandsTitleSize = () => {
+    const sizes = {
+      small: 'text-xl sm:text-2xl',
+      normal: 'text-3xl sm:text-4xl',
+      large: 'text-4xl sm:text-5xl',
+      xlarge: 'text-5xl sm:text-6xl',
+    };
+    return sizes[settings.brands_title_size] || 'text-3xl sm:text-4xl';
+  };
+
+  const getBrandsSubtitleSize = () => {
+    const sizes = {
+      small: 'text-xs',
+      normal: 'text-base',
+      large: 'text-lg',
+      xlarge: 'text-xl',
+    };
+    return sizes[settings.brands_subtitle_size] || 'text-base';
   };
 
   const scrollToSection = (id) => {
@@ -389,10 +427,10 @@ export default function Landing() {
       {/* Brands Section */}
       <section id="brands" className="py-20 md:py-32 border-y border-white/5" data-testid="brands-section" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center">
-          <h2 className={`${getHeadingSize('h2')} font-semibold tracking-tight mb-4`} style={{ color: settings.text_color, fontFamily: settings.heading_font }} data-testid="brands-title">
+          <h2 className={`${getBrandsTitleSize()} font-semibold tracking-tight mb-4`} style={{ color: settings.brands_title_color, fontFamily: settings.heading_font, fontWeight: settings.brands_title_bold ? 'bold' : 'normal', textShadow: getBrandsTitleShadow() }} data-testid="brands-title">
             {language === 'tr' ? settings.brands_title_tr : settings.brands_title_en}
           </h2>
-          <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font, textShadow: getBrandsSubtitleShadow(), fontWeight: settings.brands_subtitle_bold ? 'bold' : 'normal' }} data-testid="brands-subtitle">
+          <p className={getBrandsSubtitleSize()} style={{ color: settings.brands_subtitle_color, fontFamily: settings.body_font, textShadow: getBrandsSubtitleShadow(), fontWeight: settings.brands_subtitle_bold ? 'bold' : 'normal' }} data-testid="brands-subtitle">
             {language === 'tr' ? settings.brands_subtitle_tr : settings.brands_subtitle_en}
           </p>
         </div>
