@@ -13,6 +13,8 @@ import logging
 import bcrypt
 import jwt
 import secrets
+import asyncio
+import resend
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import List, Optional
 from datetime import datetime, timezone, timedelta
@@ -24,6 +26,10 @@ db = client[os.environ['DB_NAME']]
 
 # JWT Config
 JWT_ALGORITHM = "HS256"
+
+# Resend Config
+resend.api_key = os.environ.get("RESEND_API_KEY", "")
+SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "onboarding@resend.dev")
 
 def get_jwt_secret() -> str:
     return os.environ.get("JWT_SECRET", "default-secret-change-in-production")
@@ -142,6 +148,7 @@ class ContactMessage(BaseModel):
     name: str
     email: EmailStr
     phone: Optional[str] = None
+    subject: Optional[str] = None
     message: str
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     read: bool = False
@@ -150,6 +157,7 @@ class ContactMessageCreate(BaseModel):
     name: str
     email: EmailStr
     phone: Optional[str] = None
+    subject: Optional[str] = None
     message: str
 
 class SiteSettings(BaseModel):
@@ -502,6 +510,40 @@ async def submit_contact(contact: ContactMessageCreate):
     contact_dict["created_at"] = datetime.now(timezone.utc).isoformat()
     contact_dict["read"] = False
     await db.messages.insert_one(contact_dict)
+
+    # Send email via Resend
+    try:
+        subject_line = f"{contact.name}"
+        if contact.subject:
+            subject_line += f" , {contact.subject}"
+
+        html_body = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333; border-bottom: 2px solid #007AFF; padding-bottom: 10px;">Atera İletişim Formu</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <tr><td style="padding: 8px 0; font-weight: bold; color: #555; width: 120px;">Ad Soyad:</td><td style="padding: 8px 0; color: #333;">{contact.name}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold; color: #555;">E-posta:</td><td style="padding: 8px 0; color: #333;">{contact.email}</td></tr>
+                {"<tr><td style='padding: 8px 0; font-weight: bold; color: #555;'>Konu:</td><td style='padding: 8px 0; color: #333;'>" + contact.subject + "</td></tr>" if contact.subject else ""}
+            </table>
+            <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                <p style="font-weight: bold; color: #555; margin: 0 0 8px 0;">Mesaj:</p>
+                <p style="color: #333; margin: 0; white-space: pre-wrap;">{contact.message}</p>
+            </div>
+        </div>
+        """
+
+        params = {
+            "from": f"Atera İletişim Formu <{SENDER_EMAIL}>",
+            "to": ["satis@atera.com.tr"],
+            "subject": subject_line,
+            "html": html_body,
+            "reply_to": contact.email
+        }
+        await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Contact email sent for {contact.name}")
+    except Exception as e:
+        logger.error(f"Failed to send contact email: {str(e)}")
+
     return contact_dict
 
 # Include routers

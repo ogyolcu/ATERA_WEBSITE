@@ -91,7 +91,7 @@ export default function Landing() {
   });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -133,7 +133,7 @@ export default function Landing() {
     try {
       await axios.post(`${API}/contact`, contactForm);
       toast.success(t('contact_success'));
-      setContactForm({ name: '', email: '', message: '' });
+      setContactForm({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       toast.error(t('contact_error'));
     } finally {
@@ -520,6 +520,17 @@ export default function Landing() {
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
                     style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
                     data-testid="contact-email-input"
+                  />
+                </div>
+                <div>
+                  <Input
+                    type="text"
+                    placeholder={language === 'tr' ? 'Konu' : 'Subject'}
+                    value={contactForm.subject}
+                    onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-white/10"
+                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
+                    data-testid="contact-subject-input"
                   />
                 </div>
                 <div>
