@@ -7,50 +7,42 @@ Build a one-page landing site for atera.com.tr similar to laptop.co.nz. Business
 1. **Site Visitors** - Turkish/English speaking customers looking for IT equipment
 2. **Admin Users** - Atera staff managing content (banners, brands, messages)
 
-## Core Requirements
-- Hero section with carousel/banners (admin manageable)
-- Brand partners logos section (HP, Lenovo, Dell, VIYERO)
-- Contact form with email integration
-- Turkish/English language support
-- Admin panel for content management
-- Full visual customization from Admin Dashboard
-
 ## What's Been Implemented
 
 ### Landing Page
 - [x] Hero carousel with auto-slide (5s interval)
-- [x] Navigation with smooth scroll (Ürünler, Markalar, İletişim - no Yönetim link)
+- [x] Navigation with smooth scroll (Ürünler, Markalar, İletişim)
 - [x] Language switcher (TR/EN) with localStorage persistence
 - [x] Products section (Laptops, Gaming Desk, Monitor Arms)
 - [x] Brand partners marquee (HP, Lenovo, Dell, VIYERO) - HP & Dell 35% larger
 - [x] Contact form (name, email, message - phone removed)
 - [x] Contact info with editable address (phone removed)
 - [x] Mobile responsive with hamburger menu
-- [x] Glassmorphism header design
-- [x] Dynamic color, font, and text shadow support from Admin settings
+- [x] Dynamic color, font, text shadow, font size support from Admin settings
 
-### Admin Panel
-- [x] JWT localStorage authentication (Bearer token)
+### Admin Panel - Settings
+- [x] Colors: background, surface, header, header_text_color, primary, text, secondary
+- [x] Fonts: heading font, body font
+- [x] Banner: text shadow (active, color, opacity, blur, x, y), subtitle bold/shadow
+- [x] Menu: shadow/bold, burger color
+- [x] Brands Title: text TR/EN, color, font size (small/normal/large/xlarge), bold, shadow (color/blur/opacity)
+- [x] Brands Subtitle: text TR/EN, color, font size, bold, shadow (color/blur/opacity)
+- [x] Contact Section: title TR/EN, subtitle TR/EN, address, title/subtitle/address colors
+- [x] Logo URL/text, header logo height 95%
+
+### Admin Panel - CRUD
 - [x] Banner CRUD (add, edit, delete, toggle active)
 - [x] Brand CRUD (add, edit, delete, toggle active)
 - [x] Contact messages view (mark as read, delete)
-- [x] Color settings: background, surface, header, header_text_color, primary, text, secondary
-- [x] Font settings: heading font, body font
-- [x] Text shadow settings: banner text shadow, menu shadow/bold, brands subtitle shadow/bold
-- [x] Burger menu color control, Logo URL/text, Menu text editing (TR/EN)
-- [x] Contact section settings: title TR/EN, subtitle TR/EN, address, title/subtitle/address colors
 
 ### Backend
 - [x] FastAPI with MongoDB (Motor async)
-- [x] JWT authentication with localStorage Bearer token
+- [x] JWT localStorage Bearer token auth
 - [x] Auto-seeding admin user and default content
-- [x] Public and protected API routes
 - [x] UptimeRobot /api/uptime/ping endpoint
 
 ### Deployment
-- [x] Render (Static Site for Frontend, Web Service for Backend)
-- [x] MongoDB Atlas integration
-- [x] GitHub auto-deploy from main branch
+- [x] Render (Static Site + Web Service) + MongoDB Atlas + GitHub
 
 ## Prioritized Backlog
 
@@ -72,13 +64,3 @@ Build a one-page landing site for atera.com.tr similar to laptop.co.nz. Business
 ## Admin Credentials
 - Email: ozan.yolcu@atera.com.tr
 - Password: admin123
-
-## Key API Endpoints
-- POST /api/auth/login (returns access_token)
-- GET /api/auth/me
-- GET /api/public/settings
-- PUT /api/admin/settings
-- GET /api/uptime/ping
-
-## Database Collections
-- users, settings, banners, brands, contacts
