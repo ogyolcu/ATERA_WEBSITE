@@ -527,7 +527,7 @@ export default function Landing() {
                     onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                     required
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
+                    style={{ backgroundColor: '#FFFFFF', color: '#000000', fontFamily: settings.body_font }}
                     data-testid="contact-name-input"
                   />
                 </div>
@@ -539,7 +539,7 @@ export default function Landing() {
                     onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                     required
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
+                    style={{ backgroundColor: '#FFFFFF', color: '#000000', fontFamily: settings.body_font }}
                     data-testid="contact-email-input"
                   />
                 </div>
@@ -550,7 +550,7 @@ export default function Landing() {
                     value={contactForm.subject}
                     onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
+                    style={{ backgroundColor: '#FFFFFF', color: '#000000', fontFamily: settings.body_font }}
                     data-testid="contact-subject-input"
                   />
                 </div>
@@ -562,7 +562,7 @@ export default function Landing() {
                     required
                     rows={4}
                     className="w-full px-4 py-3 rounded-lg resize-none border border-white/10"
-                    style={{ backgroundColor: settings.background_color, color: settings.text_color, fontFamily: settings.body_font }}
+                    style={{ backgroundColor: '#FFFFFF', color: '#000000', fontFamily: settings.body_font }}
                     data-testid="contact-message-input"
                   />
                 </div>
