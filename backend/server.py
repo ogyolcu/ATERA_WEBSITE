@@ -485,7 +485,7 @@ async def update_settings(settings: SiteSettingsUpdate, user: dict = Depends(get
 async def root():
     return {"message": "Atera API"}
 
-@api_router.get("/uptime/ping")
+@api_router.api_route("/uptime/ping", methods=["GET", "HEAD"])
 async def uptime_ping():
     return {"status": "ok", "message": "pong"}
 
