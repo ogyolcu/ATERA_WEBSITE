@@ -87,7 +87,8 @@ export default function Landing() {
     contact_title_color: '#FFFFFF',
     contact_subtitle_color: '#A1A1AA',
     contact_address_color: '#A1A1AA',
-    products_visible: true
+    products_visible: true,
+    og_image_url: ''
   });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -126,6 +127,26 @@ export default function Landing() {
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [banners.length, nextSlide]);
+
+  // Update OG image meta tag dynamically
+  useEffect(() => {
+    if (settings.og_image_url) {
+      let ogTag = document.querySelector('meta[property="og:image"]');
+      let twTag = document.querySelector('meta[name="twitter:image"]');
+      if (!ogTag) {
+        ogTag = document.createElement('meta');
+        ogTag.setAttribute('property', 'og:image');
+        document.head.appendChild(ogTag);
+      }
+      if (!twTag) {
+        twTag = document.createElement('meta');
+        twTag.setAttribute('name', 'twitter:image');
+        document.head.appendChild(twTag);
+      }
+      ogTag.setAttribute('content', settings.og_image_url);
+      twTag.setAttribute('content', settings.og_image_url);
+    }
+  }, [settings.og_image_url]);
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();

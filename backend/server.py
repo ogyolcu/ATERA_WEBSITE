@@ -248,6 +248,8 @@ class SiteSettings(BaseModel):
     contact_address_color: str = "#A1A1AA"
     # Section Visibility
     products_visible: bool = True
+    # OG Image
+    og_image_url: str = ""
 
 class SiteSettingsUpdate(BaseModel):
     background_color: Optional[str] = None
@@ -322,6 +324,7 @@ class SiteSettingsUpdate(BaseModel):
     contact_subtitle_color: Optional[str] = None
     contact_address_color: Optional[str] = None
     products_visible: Optional[bool] = None
+    og_image_url: Optional[str] = None
 
 # Auth Endpoints
 @auth_router.post("/login")

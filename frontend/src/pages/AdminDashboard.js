@@ -95,7 +95,8 @@ export default function AdminDashboard() {
     contact_title_color: '#FFFFFF',
     contact_subtitle_color: '#A1A1AA',
     contact_address_color: '#A1A1AA',
-    products_visible: true
+    products_visible: true,
+    og_image_url: ''
   });
   const [savingSettings, setSavingSettings] = useState(false);
   const [activeSettingsTab, setActiveSettingsTab] = useState('colors');
@@ -631,6 +632,23 @@ export default function AdminDashboard() {
                         <img src={settings.logo_url} alt="Logo Preview" className="h-12 object-contain" />
                       </div>
                     )}
+                    <div className="pt-4 border-t border-white/10">
+                      <h3 className="text-white font-medium mb-4">Sosyal Medya Paylaşım Görseli (OG Image)</h3>
+                      <p className="text-sm text-[#A1A1AA] mb-3">Site linki paylaşıldığında görünecek görsel (Cloudinary URL)</p>
+                      <Input 
+                        value={settings.og_image_url} 
+                        onChange={(e) => setSettings({ ...settings, og_image_url: e.target.value })} 
+                        className="dark-input" 
+                        placeholder="https://res.cloudinary.com/..."
+                        data-testid="og-image-url-input"
+                      />
+                      {settings.og_image_url && (
+                        <div className="mt-3 p-4 bg-black/20 rounded-xl">
+                          <label className="block text-sm text-[#A1A1AA] mb-2">Önizleme</label>
+                          <img src={settings.og_image_url} alt="OG Image Preview" className="max-h-40 object-contain rounded" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
 
