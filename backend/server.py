@@ -238,6 +238,8 @@ class SiteSettings(BaseModel):
     contact_title_color: str = "#FFFFFF"
     contact_subtitle_color: str = "#A1A1AA"
     contact_address_color: str = "#A1A1AA"
+    # Section Visibility
+    products_visible: bool = True
 
 class SiteSettingsUpdate(BaseModel):
     background_color: Optional[str] = None
@@ -311,6 +313,7 @@ class SiteSettingsUpdate(BaseModel):
     contact_title_color: Optional[str] = None
     contact_subtitle_color: Optional[str] = None
     contact_address_color: Optional[str] = None
+    products_visible: Optional[bool] = None
 
 # Auth Endpoints
 @auth_router.post("/login")

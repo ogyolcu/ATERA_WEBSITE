@@ -86,7 +86,8 @@ export default function Landing() {
     contact_address: 'İstanbul, Türkiye',
     contact_title_color: '#FFFFFF',
     contact_subtitle_color: '#A1A1AA',
-    contact_address_color: '#A1A1AA'
+    contact_address_color: '#A1A1AA',
+    products_visible: true
   });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -264,9 +265,11 @@ export default function Landing() {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
+              {settings.products_visible && (
               <button onClick={() => scrollToSection('products')} className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-products">
                 {language === 'tr' ? settings.menu_products_tr : settings.menu_products_en}
               </button>
+              )}
               <button onClick={() => scrollToSection('brands')} className="hover:opacity-100 transition-colors" style={{ color: settings.header_text_color, fontFamily: settings.body_font, fontWeight: settings.menu_bold ? 'bold' : 'normal', textShadow: getMenuShadow() }} data-testid="nav-brands">
                 {language === 'tr' ? settings.menu_brands_tr : settings.menu_brands_en}
               </button>
@@ -312,7 +315,9 @@ export default function Landing() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 py-4" style={{ backgroundColor: settings.background_color }} data-testid="mobile-menu">
             <nav className="flex flex-col gap-4 px-6">
+              {settings.products_visible && (
               <button onClick={() => scrollToSection('products')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_products_tr : settings.menu_products_en}</button>
+              )}
               <button onClick={() => scrollToSection('brands')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_brands_tr : settings.menu_brands_en}</button>
               <button onClick={() => scrollToSection('contact')} className="text-left py-2" style={{ color: settings.text_color }}>{language === 'tr' ? settings.menu_contact_tr : settings.menu_contact_en}</button>
             </nav>
@@ -390,6 +395,7 @@ export default function Landing() {
       </section>
 
       {/* Products Section */}
+      {settings.products_visible && (
       <section id="products" className="py-20 md:py-32 px-6 md:px-12" data-testid="products-section" style={{ backgroundColor: settings.background_color }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -423,6 +429,7 @@ export default function Landing() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Brands Section */}
       <section id="brands" className="py-20 md:py-32 border-y border-white/5" data-testid="brands-section" style={{ backgroundColor: settings.background_color }}>

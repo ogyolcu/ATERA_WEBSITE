@@ -94,7 +94,8 @@ export default function AdminDashboard() {
     contact_address: 'İstanbul, Türkiye',
     contact_title_color: '#FFFFFF',
     contact_subtitle_color: '#A1A1AA',
-    contact_address_color: '#A1A1AA'
+    contact_address_color: '#A1A1AA',
+    products_visible: true
   });
   const [savingSettings, setSavingSettings] = useState(false);
   const [activeSettingsTab, setActiveSettingsTab] = useState('colors');
@@ -711,6 +712,13 @@ export default function AdminDashboard() {
                 {/* Products */}
                 {activeSettingsTab === 'products' && (
                   <div className="space-y-8">
+                    <div className="p-4 border border-white/10 rounded-xl flex items-center justify-between">
+                      <div>
+                        <h3 className="text-white font-medium">Ürünler Bölümü Görünürlüğü</h3>
+                        <p className="text-sm text-[#A1A1AA]">Ürünler bölümünü ve menü linkini gizle/göster</p>
+                      </div>
+                      <Switch checked={settings.products_visible} onCheckedChange={(checked) => setSettings({ ...settings, products_visible: checked })} data-testid="products-visible-toggle" />
+                    </div>
                     <div className="p-4 border border-white/10 rounded-xl">
                       <h4 className="text-white font-medium mb-4">Ürün 1</h4>
                       <div className="space-y-4">
