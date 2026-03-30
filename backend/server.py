@@ -250,6 +250,9 @@ class SiteSettings(BaseModel):
     products_visible: bool = True
     # OG Image
     og_image_url: str = ""
+    # Hero Button
+    hero_button_color: str = "#FFFFFF"
+    hero_button_text_color: str = "#000000"
 
 class SiteSettingsUpdate(BaseModel):
     background_color: Optional[str] = None
@@ -325,6 +328,8 @@ class SiteSettingsUpdate(BaseModel):
     contact_address_color: Optional[str] = None
     products_visible: Optional[bool] = None
     og_image_url: Optional[str] = None
+    hero_button_color: Optional[str] = None
+    hero_button_text_color: Optional[str] = None
 
 # Auth Endpoints
 @auth_router.post("/login")

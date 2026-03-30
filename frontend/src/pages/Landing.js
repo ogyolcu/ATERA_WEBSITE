@@ -88,12 +88,15 @@ export default function Landing() {
     contact_subtitle_color: '#A1A1AA',
     contact_address_color: '#A1A1AA',
     products_visible: true,
-    og_image_url: ''
+    og_image_url: '',
+    hero_button_color: '#FFFFFF',
+    hero_button_text_color: '#000000'
   });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -109,8 +112,10 @@ export default function Landing() {
       setBanners(bannersRes.data);
       setBrands(brandsRes.data);
       setSettings(settingsRes.data);
+      setLoaded(true);
     } catch (error) {
       console.error('Error fetching data:', error);
+      setLoaded(true);
     }
   };
 
@@ -263,6 +268,10 @@ export default function Landing() {
     setMobileMenuOpen(false);
   };
 
+  if (!loaded) {
+    return <div className="min-h-screen" style={{ backgroundColor: '#0A0A0A' }} />;
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: settings.background_color, fontFamily: settings.body_font }}>
       {/* Google Fonts Link */}
@@ -372,9 +381,8 @@ export default function Landing() {
               <div className="flex flex-wrap gap-4">
                 <Button 
                   onClick={() => scrollToSection('contact')}
-                  variant="outline"
-                  className="border-white/20 hover:bg-white/10 px-8 py-3 rounded-lg font-medium"
-                  style={{ color: settings.text_color }}
+                  className="px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity"
+                  style={{ backgroundColor: settings.hero_button_color, color: settings.hero_button_text_color, border: `1px solid ${settings.hero_button_color}` }}
                   data-testid="hero-contact"
                 >
                   {t('hero_contact')}

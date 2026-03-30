@@ -96,7 +96,9 @@ export default function AdminDashboard() {
     contact_subtitle_color: '#A1A1AA',
     contact_address_color: '#A1A1AA',
     products_visible: true,
-    og_image_url: ''
+    og_image_url: '',
+    hero_button_color: '#FFFFFF',
+    hero_button_text_color: '#000000'
   });
   const [savingSettings, setSavingSettings] = useState(false);
   const [activeSettingsTab, setActiveSettingsTab] = useState('colors');
@@ -601,6 +603,20 @@ export default function AdminDashboard() {
                       <div className="flex items-center gap-3">
                         <input type="color" value={settings.text_secondary_color} onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
                         <Input value={settings.text_secondary_color} onChange={(e) => setSettings({ ...settings, text_secondary_color: e.target.value })} className="dark-input flex-1" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">"Bize Ulaşın" Buton Rengi</label>
+                      <div className="flex items-center gap-3">
+                        <input type="color" value={settings.hero_button_color} onChange={(e) => setSettings({ ...settings, hero_button_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.hero_button_color} onChange={(e) => setSettings({ ...settings, hero_button_color: e.target.value })} className="dark-input flex-1" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-[#A1A1AA] mb-2">"Bize Ulaşın" Yazı Rengi</label>
+                      <div className="flex items-center gap-3">
+                        <input type="color" value={settings.hero_button_text_color} onChange={(e) => setSettings({ ...settings, hero_button_text_color: e.target.value })} className="w-12 h-12 rounded-lg cursor-pointer border-0" />
+                        <Input value={settings.hero_button_text_color} onChange={(e) => setSettings({ ...settings, hero_button_text_color: e.target.value })} className="dark-input flex-1" />
                       </div>
                     </div>
                   </div>
