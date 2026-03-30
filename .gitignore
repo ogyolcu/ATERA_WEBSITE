@@ -28,3 +28,7 @@ test_reports/
 
 # Memory
 memory/
+-e 
+# Environment files
+*.env
+*.env.*
