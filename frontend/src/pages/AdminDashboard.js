@@ -72,13 +72,16 @@ export default function AdminDashboard() {
     brands_title_en: 'Trusted Brands',
     brands_subtitle_tr: 'Dünya liderlerinden IT ekipmanları',
     brands_subtitle_en: 'IT equipment from world leaders',
-    product1_title: 'Laptops',
+    product1_title_tr: 'Laptops',
+    product1_title_en: 'Laptops',
     product1_desc_tr: 'Profesyoneller için yüksek performanslı laptoplar',
     product1_desc_en: 'High-performance laptops for professionals',
-    product2_title: 'Gaming Desk',
+    product2_title_tr: 'Gaming Desk',
+    product2_title_en: 'Gaming Desk',
     product2_desc_tr: 'Oyuncular için ergonomik gaming masaları',
     product2_desc_en: 'Ergonomic gaming desks for gamers',
-    product3_title: 'Monitor Arms',
+    product3_title_tr: 'Monitor Arms',
+    product3_title_en: 'Monitor Arms',
     product3_desc_tr: 'Ayarlanabilir monitör kolları ve standlar',
     product3_desc_en: 'Adjustable monitor arms and stands',
     menu_products_tr: 'Ürünler',
@@ -756,9 +759,15 @@ export default function AdminDashboard() {
                     <div className="p-4 border border-white/10 rounded-xl">
                       <h4 className="text-white font-medium mb-4">Ürün 1</h4>
                       <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık</label>
-                          <Input value={settings.product1_title} onChange={(e) => setSettings({ ...settings, product1_title: e.target.value })} className="dark-input" />
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (TR)</label>
+                            <Input value={settings.product1_title_tr} onChange={(e) => setSettings({ ...settings, product1_title_tr: e.target.value })} className="dark-input" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Title (EN)</label>
+                            <Input value={settings.product1_title_en} onChange={(e) => setSettings({ ...settings, product1_title_en: e.target.value })} className="dark-input" />
+                          </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
@@ -766,7 +775,7 @@ export default function AdminDashboard() {
                             <Input value={settings.product1_desc_tr} onChange={(e) => setSettings({ ...settings, product1_desc_tr: e.target.value })} className="dark-input" />
                           </div>
                           <div>
-                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (EN)</label>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Description (EN)</label>
                             <Input value={settings.product1_desc_en} onChange={(e) => setSettings({ ...settings, product1_desc_en: e.target.value })} className="dark-input" />
                           </div>
                         </div>
@@ -775,9 +784,15 @@ export default function AdminDashboard() {
                     <div className="p-4 border border-white/10 rounded-xl">
                       <h4 className="text-white font-medium mb-4">Ürün 2</h4>
                       <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık</label>
-                          <Input value={settings.product2_title} onChange={(e) => setSettings({ ...settings, product2_title: e.target.value })} className="dark-input" />
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (TR)</label>
+                            <Input value={settings.product2_title_tr} onChange={(e) => setSettings({ ...settings, product2_title_tr: e.target.value })} className="dark-input" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Title (EN)</label>
+                            <Input value={settings.product2_title_en} onChange={(e) => setSettings({ ...settings, product2_title_en: e.target.value })} className="dark-input" />
+                          </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
@@ -785,7 +800,7 @@ export default function AdminDashboard() {
                             <Input value={settings.product2_desc_tr} onChange={(e) => setSettings({ ...settings, product2_desc_tr: e.target.value })} className="dark-input" />
                           </div>
                           <div>
-                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (EN)</label>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Description (EN)</label>
                             <Input value={settings.product2_desc_en} onChange={(e) => setSettings({ ...settings, product2_desc_en: e.target.value })} className="dark-input" />
                           </div>
                         </div>
@@ -794,9 +809,15 @@ export default function AdminDashboard() {
                     <div className="p-4 border border-white/10 rounded-xl">
                       <h4 className="text-white font-medium mb-4">Ürün 3</h4>
                       <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm text-[#A1A1AA] mb-2">Başlık</label>
-                          <Input value={settings.product3_title} onChange={(e) => setSettings({ ...settings, product3_title: e.target.value })} className="dark-input" />
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Başlık (TR)</label>
+                            <Input value={settings.product3_title_tr} onChange={(e) => setSettings({ ...settings, product3_title_tr: e.target.value })} className="dark-input" />
+                          </div>
+                          <div>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Title (EN)</label>
+                            <Input value={settings.product3_title_en} onChange={(e) => setSettings({ ...settings, product3_title_en: e.target.value })} className="dark-input" />
+                          </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
@@ -804,7 +825,7 @@ export default function AdminDashboard() {
                             <Input value={settings.product3_desc_tr} onChange={(e) => setSettings({ ...settings, product3_desc_tr: e.target.value })} className="dark-input" />
                           </div>
                           <div>
-                            <label className="block text-sm text-[#A1A1AA] mb-2">Açıklama (EN)</label>
+                            <label className="block text-sm text-[#A1A1AA] mb-2">Description (EN)</label>
                             <Input value={settings.product3_desc_en} onChange={(e) => setSettings({ ...settings, product3_desc_en: e.target.value })} className="dark-input" />
                           </div>
                         </div>

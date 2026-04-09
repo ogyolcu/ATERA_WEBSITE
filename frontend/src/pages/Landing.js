@@ -64,13 +64,16 @@ export default function Landing() {
     brands_title_en: 'Trusted Brands',
     brands_subtitle_tr: 'Dünya liderlerinden IT ekipmanları',
     brands_subtitle_en: 'IT equipment from world leaders',
-    product1_title: 'Laptops',
+    product1_title_tr: 'Laptops',
+    product1_title_en: 'Laptops',
     product1_desc_tr: 'Profesyoneller için yüksek performanslı laptoplar',
     product1_desc_en: 'High-performance laptops for professionals',
-    product2_title: 'Gaming Desk',
+    product2_title_tr: 'Gaming Desk',
+    product2_title_en: 'Gaming Desk',
     product2_desc_tr: 'Oyuncular için ergonomik gaming masaları',
     product2_desc_en: 'Ergonomic gaming desks for gamers',
-    product3_title: 'Monitor Arms',
+    product3_title_tr: 'Monitor Arms',
+    product3_title_en: 'Monitor Arms',
     product3_desc_tr: 'Ayarlanabilir monitör kolları ve standlar',
     product3_desc_en: 'Adjustable monitor arms and stands',
     menu_products_tr: 'Ürünler',
@@ -432,7 +435,7 @@ export default function Landing() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Laptop style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.product1_title}</h3>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{language === 'tr' ? settings.product1_title_tr : settings.product1_title_en}</h3>
               <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
                 {language === 'tr' ? settings.product1_desc_tr : settings.product1_desc_en}
               </p>
@@ -441,7 +444,7 @@ export default function Landing() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Gamepad2 style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.product2_title}</h3>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{language === 'tr' ? settings.product2_title_tr : settings.product2_title_en}</h3>
               <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
                 {language === 'tr' ? settings.product2_desc_tr : settings.product2_desc_en}
               </p>
@@ -450,7 +453,7 @@ export default function Landing() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${settings.primary_color}33` }}>
                 <Monitor style={{ color: settings.primary_color }} size={32} />
               </div>
-              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{settings.product3_title}</h3>
+              <h3 className={`${getHeadingSize('h3')} font-semibold mb-3`} style={{ color: settings.text_color, fontFamily: settings.heading_font }}>{language === 'tr' ? settings.product3_title_tr : settings.product3_title_en}</h3>
               <p className={getBodySize()} style={{ color: settings.text_secondary_color, fontFamily: settings.body_font }}>
                 {language === 'tr' ? settings.product3_desc_tr : settings.product3_desc_en}
               </p>

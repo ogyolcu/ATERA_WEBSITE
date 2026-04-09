@@ -221,13 +221,16 @@ class SiteSettings(BaseModel):
     brands_subtitle_tr: str = "Dünya liderlerinden IT ekipmanları"
     brands_subtitle_en: str = "IT equipment from world leaders"
     # Products Section
-    product1_title: str = "Laptops"
+    product1_title_tr: str = "Laptops"
+    product1_title_en: str = "Laptops"
     product1_desc_tr: str = "Profesyoneller için yüksek performanslı laptoplar"
     product1_desc_en: str = "High-performance laptops for professionals"
-    product2_title: str = "Gaming Desk"
+    product2_title_tr: str = "Gaming Desk"
+    product2_title_en: str = "Gaming Desk"
     product2_desc_tr: str = "Oyuncular için ergonomik gaming masaları"
     product2_desc_en: str = "Ergonomic gaming desks for gamers"
-    product3_title: str = "Monitor Arms"
+    product3_title_tr: str = "Monitor Arms"
+    product3_title_en: str = "Monitor Arms"
     product3_desc_tr: str = "Ayarlanabilir monitör kolları ve standlar"
     product3_desc_en: str = "Adjustable monitor arms and stands"
     # Menu
@@ -303,13 +306,16 @@ class SiteSettingsUpdate(BaseModel):
     brands_title_en: Optional[str] = None
     brands_subtitle_tr: Optional[str] = None
     brands_subtitle_en: Optional[str] = None
-    product1_title: Optional[str] = None
+    product1_title_tr: Optional[str] = None
+    product1_title_en: Optional[str] = None
     product1_desc_tr: Optional[str] = None
     product1_desc_en: Optional[str] = None
-    product2_title: Optional[str] = None
+    product2_title_tr: Optional[str] = None
+    product2_title_en: Optional[str] = None
     product2_desc_tr: Optional[str] = None
     product2_desc_en: Optional[str] = None
-    product3_title: Optional[str] = None
+    product3_title_tr: Optional[str] = None
+    product3_title_en: Optional[str] = None
     product3_desc_tr: Optional[str] = None
     product3_desc_en: Optional[str] = None
     menu_products_tr: Optional[str] = None
